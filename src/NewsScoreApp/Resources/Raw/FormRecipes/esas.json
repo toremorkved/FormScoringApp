@@ -1,0 +1,219 @@
+{
+  "id": "esas",
+  "title": "ESAS-r",
+  "subtitle": "Edmonton Symptom Assessment System",
+  "icon": "📝",
+  "sections": [
+    {
+      "id": "pain",
+      "label": "Smerte",
+      "hint": "0 = Ingen smerte, 10 = Verst tenkelige smerte",
+      "kind": "Numeric",
+      "min": 0,
+      "max": 10,
+      "isDecimal": false,
+      "scoreBands": [
+        { "minValue": 0, "maxValue": 0, "score": 0 },
+        { "minValue": 1, "maxValue": 1, "score": 1 },
+        { "minValue": 2, "maxValue": 2, "score": 2 },
+        { "minValue": 3, "maxValue": 3, "score": 3 },
+        { "minValue": 4, "maxValue": 4, "score": 4 },
+        { "minValue": 5, "maxValue": 5, "score": 5 },
+        { "minValue": 6, "maxValue": 6, "score": 6 },
+        { "minValue": 7, "maxValue": 7, "score": 7 },
+        { "minValue": 8, "maxValue": 8, "score": 8 },
+        { "minValue": 9, "maxValue": 9, "score": 9 },
+        { "minValue": 10, "maxValue": 10, "score": 10 }
+      ]
+    },
+    {
+      "id": "tiredness",
+      "label": "Tretthet",
+      "hint": "0 = Ingen tretthet, 10 = Verst tenkelige tretthet",
+      "info": "Tretthet betyr en følelse av slapphet, svakhet eller mangel på energi.",
+      "kind": "Numeric",
+      "min": 0,
+      "max": 10,
+      "isDecimal": false,
+      "scoreBands": [
+        { "minValue": 0, "maxValue": 0, "score": 0 },
+        { "minValue": 1, "maxValue": 1, "score": 1 },
+        { "minValue": 2, "maxValue": 2, "score": 2 },
+        { "minValue": 3, "maxValue": 3, "score": 3 },
+        { "minValue": 4, "maxValue": 4, "score": 4 },
+        { "minValue": 5, "maxValue": 5, "score": 5 },
+        { "minValue": 6, "maxValue": 6, "score": 6 },
+        { "minValue": 7, "maxValue": 7, "score": 7 },
+        { "minValue": 8, "maxValue": 8, "score": 8 },
+        { "minValue": 9, "maxValue": 9, "score": 9 },
+        { "minValue": 10, "maxValue": 10, "score": 10 }
+      ]
+    },
+    {
+      "id": "drowsiness",
+      "label": "Døsighet",
+      "hint": "0 = Ingen døsighet, 10 = Verst tenkelige døsighet",
+      "info": "Døsighet betyr en følelse av søvnighet.",
+      "kind": "Numeric",
+      "min": 0,
+      "max": 10,
+      "isDecimal": false,
+      "scoreBands": [
+        { "minValue": 0, "maxValue": 0, "score": 0 },
+        { "minValue": 1, "maxValue": 1, "score": 1 },
+        { "minValue": 2, "maxValue": 2, "score": 2 },
+        { "minValue": 3, "maxValue": 3, "score": 3 },
+        { "minValue": 4, "maxValue": 4, "score": 4 },
+        { "minValue": 5, "maxValue": 5, "score": 5 },
+        { "minValue": 6, "maxValue": 6, "score": 6 },
+        { "minValue": 7, "maxValue": 7, "score": 7 },
+        { "minValue": 8, "maxValue": 8, "score": 8 },
+        { "minValue": 9, "maxValue": 9, "score": 9 },
+        { "minValue": 10, "maxValue": 10, "score": 10 }
+      ]
+    },
+    {
+      "id": "nausea",
+      "label": "Kvalme",
+      "hint": "0 = Ingen kvalme, 10 = Verst tenkelige kvalme",
+      "kind": "Numeric",
+      "min": 0,
+      "max": 10,
+      "isDecimal": false,
+      "scoreBands": [
+        { "minValue": 0, "maxValue": 0, "score": 0 },
+        { "minValue": 1, "maxValue": 1, "score": 1 },
+        { "minValue": 2, "maxValue": 2, "score": 2 },
+        { "minValue": 3, "maxValue": 3, "score": 3 },
+        { "minValue": 4, "maxValue": 4, "score": 4 },
+        { "minValue": 5, "maxValue": 5, "score": 5 },
+        { "minValue": 6, "maxValue": 6, "score": 6 },
+        { "minValue": 7, "maxValue": 7, "score": 7 },
+        { "minValue": 8, "maxValue": 8, "score": 8 },
+        { "minValue": 9, "maxValue": 9, "score": 9 },
+        { "minValue": 10, "maxValue": 10, "score": 10 }
+      ]
+    },
+    {
+      "id": "appetite",
+      "label": "Nedsatt matlyst",
+      "hint": "0 = Normal matlyst, 10 = Verst tenkelige nedsatt matlyst",
+      "kind": "Numeric",
+      "min": 0,
+      "max": 10,
+      "isDecimal": false,
+      "scoreBands": [
+        { "minValue": 0, "maxValue": 0, "score": 0 },
+        { "minValue": 1, "maxValue": 1, "score": 1 },
+        { "minValue": 2, "maxValue": 2, "score": 2 },
+        { "minValue": 3, "maxValue": 3, "score": 3 },
+        { "minValue": 4, "maxValue": 4, "score": 4 },
+        { "minValue": 5, "maxValue": 5, "score": 5 },
+        { "minValue": 6, "maxValue": 6, "score": 6 },
+        { "minValue": 7, "maxValue": 7, "score": 7 },
+        { "minValue": 8, "maxValue": 8, "score": 8 },
+        { "minValue": 9, "maxValue": 9, "score": 9 },
+        { "minValue": 10, "maxValue": 10, "score": 10 }
+      ]
+    },
+    {
+      "id": "breathlessness",
+      "label": "Tung pust",
+      "hint": "0 = Ingen tung pust, 10 = Verst tenkelige tung pust",
+      "kind": "Numeric",
+      "min": 0,
+      "max": 10,
+      "isDecimal": false,
+      "scoreBands": [
+        { "minValue": 0, "maxValue": 0, "score": 0 },
+        { "minValue": 1, "maxValue": 1, "score": 1 },
+        { "minValue": 2, "maxValue": 2, "score": 2 },
+        { "minValue": 3, "maxValue": 3, "score": 3 },
+        { "minValue": 4, "maxValue": 4, "score": 4 },
+        { "minValue": 5, "maxValue": 5, "score": 5 },
+        { "minValue": 6, "maxValue": 6, "score": 6 },
+        { "minValue": 7, "maxValue": 7, "score": 7 },
+        { "minValue": 8, "maxValue": 8, "score": 8 },
+        { "minValue": 9, "maxValue": 9, "score": 9 },
+        { "minValue": 10, "maxValue": 10, "score": 10 }
+      ]
+    },
+    {
+      "id": "depression",
+      "label": "Nedstemthet",
+      "hint": "0 = Ikke nedstemt, 10 = Verst tenkelige nedstemthet",
+      "info": "Nedstemthet betyr en følelse av tristhet eller motløshet.",
+      "kind": "Numeric",
+      "min": 0,
+      "max": 10,
+      "isDecimal": false,
+      "scoreBands": [
+        { "minValue": 0, "maxValue": 0, "score": 0 },
+        { "minValue": 1, "maxValue": 1, "score": 1 },
+        { "minValue": 2, "maxValue": 2, "score": 2 },
+        { "minValue": 3, "maxValue": 3, "score": 3 },
+        { "minValue": 4, "maxValue": 4, "score": 4 },
+        { "minValue": 5, "maxValue": 5, "score": 5 },
+        { "minValue": 6, "maxValue": 6, "score": 6 },
+        { "minValue": 7, "maxValue": 7, "score": 7 },
+        { "minValue": 8, "maxValue": 8, "score": 8 },
+        { "minValue": 9, "maxValue": 9, "score": 9 },
+        { "minValue": 10, "maxValue": 10, "score": 10 }
+      ]
+    },
+    {
+      "id": "anxiety",
+      "label": "Engstelse",
+      "hint": "0 = Ikke engstelig, 10 = Verst tenkelige engstelse",
+      "info": "Engstelse betyr en følelse av nervøsitet eller bekymring.",
+      "kind": "Numeric",
+      "min": 0,
+      "max": 10,
+      "isDecimal": false,
+      "scoreBands": [
+        { "minValue": 0, "maxValue": 0, "score": 0 },
+        { "minValue": 1, "maxValue": 1, "score": 1 },
+        { "minValue": 2, "maxValue": 2, "score": 2 },
+        { "minValue": 3, "maxValue": 3, "score": 3 },
+        { "minValue": 4, "maxValue": 4, "score": 4 },
+        { "minValue": 5, "maxValue": 5, "score": 5 },
+        { "minValue": 6, "maxValue": 6, "score": 6 },
+        { "minValue": 7, "maxValue": 7, "score": 7 },
+        { "minValue": 8, "maxValue": 8, "score": 8 },
+        { "minValue": 9, "maxValue": 9, "score": 9 },
+        { "minValue": 10, "maxValue": 10, "score": 10 }
+      ]
+    },
+    {
+      "id": "wellbeing",
+      "label": "Følelse av velvære",
+      "hint": "0 = Best mulig velvære, 10 = Verst tenkelige velvære",
+      "info": "Velvære betyr hvordan du har det totalt sett, både fysisk og psykisk.",
+      "kind": "Numeric",
+      "min": 0,
+      "max": 10,
+      "isDecimal": false,
+      "scoreBands": [
+        { "minValue": 0, "maxValue": 0, "score": 0 },
+        { "minValue": 1, "maxValue": 1, "score": 1 },
+        { "minValue": 2, "maxValue": 2, "score": 2 },
+        { "minValue": 3, "maxValue": 3, "score": 3 },
+        { "minValue": 4, "maxValue": 4, "score": 4 },
+        { "minValue": 5, "maxValue": 5, "score": 5 },
+        { "minValue": 6, "maxValue": 6, "score": 6 },
+        { "minValue": 7, "maxValue": 7, "score": 7 },
+        { "minValue": 8, "maxValue": 8, "score": 8 },
+        { "minValue": 9, "maxValue": 9, "score": 9 },
+        { "minValue": 10, "maxValue": 10, "score": 10 }
+      ]
+    }
+  ],
+  "scoring": {
+    "riskBands": [
+      { "id": "low", "label": "LAV SYMPTOMBYRDE", "minTotal": 0, "maxTotal": 19, "color": "#22C55E" },
+      { "id": "moderate", "label": "MODERAT SYMPTOMBYRDE", "minTotal": 20, "maxTotal": 39, "color": "#F97316" },
+      { "id": "high", "label": "HØY SYMPTOMBYRDE", "minTotal": 40, "color": "#EF4444" }
+    ],
+    "escalateOnAnyMaxScore": false
+  }
+}

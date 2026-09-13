@@ -1,0 +1,82 @@
+{
+  "id": "epikrise",
+  "title": "Epikrise",
+  "subtitle": "Strukturert epikrise til spesialisthelsetjenesten/fastlege",
+  "icon": "📄",
+  "isScored": false,
+  "sections": [
+    {
+      "id": "reason",
+      "label": "Innleggelsesårsak",
+      "hint": "Hvorfor ble pasienten innlagt?",
+      "placeholder": "Beskriv hovedproblemstilling og bakgrunn for innleggelsen...",
+      "kind": "Text"
+    },
+    {
+      "id": "history",
+      "label": "Sykehistorie",
+      "hint": "Anamnese og relevant tidligere sykehistorie",
+      "placeholder": "Beskriv aktuell anamnese, tidligere sykdommer og faste medikamenter...",
+      "kind": "Text"
+    },
+    {
+      "id": "findings",
+      "label": "Kliniske funn og undersøkelser",
+      "hint": "Objektive funn, blodprøver, bildediagnostikk m.m.",
+      "placeholder": "Beskriv relevante kliniske funn og resultater av utførte undersøkelser...",
+      "kind": "Text"
+    },
+    {
+      "id": "diagnosis",
+      "label": "Diagnose(r)",
+      "hint": "Hoveddiagnose og eventuelle bidiagnoser",
+      "placeholder": "Angi hoveddiagnose og bidiagnoser, gjerne med ICD-10-kode...",
+      "kind": "Text"
+    },
+    {
+      "id": "treatment",
+      "label": "Behandling gitt under oppholdet",
+      "hint": "Medisinsk og eventuell kirurgisk behandling",
+      "placeholder": "Beskriv behandling, prosedyrer og eventuelle komplikasjoner...",
+      "kind": "Text"
+    },
+    {
+      "id": "course",
+      "label": "Forløp under oppholdet",
+      "hint": "Kort sammendrag av forløpet fra innleggelse til utskrivelse",
+      "placeholder": "Beskriv utviklingen gjennom oppholdet...",
+      "kind": "Text"
+    },
+    {
+      "id": "dischargeStatus",
+      "label": "Tilstand ved utskrivelse",
+      "kind": "SingleChoice",
+      "options": [
+        { "value": "improved", "label": "Bedret", "score": 0 },
+        { "value": "unchanged", "label": "Uendret", "score": 0 },
+        { "value": "worsened", "label": "Forverret", "score": 0 },
+        { "value": "deceased", "label": "Avdød", "score": 0 }
+      ]
+    },
+    {
+      "id": "medicationChanges",
+      "label": "Endringer i legemiddelliste",
+      "hint": "Nye, seponerte eller endrede medikamenter",
+      "placeholder": "Beskriv endringer i legemiddelbehandlingen ved utskrivelse...",
+      "kind": "Text"
+    },
+    {
+      "id": "followUp",
+      "label": "Videre oppfølging og plan",
+      "hint": "Kontroller, henvisninger og informasjon gitt til pasient/pårørende",
+      "placeholder": "Beskriv videre plan, avtalt oppfølging og eventuelle henvisninger...",
+      "kind": "Text"
+    }
+  ],
+  "scoring": {
+    "riskBands": [
+      { "id": "complete", "label": "EPIKRISE KLAR TIL SIGNERING", "minTotal": 0, "color": "#22C55E" }
+    ],
+    "escalateOnAnyMaxScore": false
+  }
+}

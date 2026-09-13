@@ -1,0 +1,49 @@
+{
+  "id": "nrs2002",
+  "title": "Ernæringsscreening",
+  "subtitle": "NRS 2002 - Nutritional Risk Screening",
+  "icon": "🍽️",
+  "sections": [
+    {
+      "id": "impairment",
+      "label": "Ernæringsmessig status",
+      "hint": "Velg det alternativet som passer best",
+      "kind": "SingleChoice",
+      "options": [
+        { "value": "normal", "label": "Normal ernæringsstatus", "score": 0 },
+        { "value": "mild", "label": "Vekttap >5 % siste 3 mnd, eller matinntak 50–75 % av behov siste uke", "score": 1 },
+        { "value": "moderate", "label": "Vekttap >5 % siste 2 mnd, eller BMI 18,5–20,5 + redusert allmenntilstand, eller matinntak 25–50 % av behov", "score": 2 },
+        { "value": "severe", "label": "Vekttap >5 % siste mnd (>15 % siste 3 mnd), eller BMI <18,5 + redusert allmenntilstand, eller matinntak 0–25 % av behov", "score": 3 }
+      ]
+    },
+    {
+      "id": "diseaseSeverity",
+      "label": "Sykdommens alvorlighetsgrad",
+      "hint": "Velg det alternativet som passer best",
+      "kind": "SingleChoice",
+      "options": [
+        { "value": "normal", "label": "Normale ernæringsbehov", "score": 0 },
+        { "value": "mild", "label": "Hoftebrudd, kronisk sykdom med akutte komplikasjoner, KOLS, kreft, diabetes, dialyse", "score": 1 },
+        { "value": "moderate", "label": "Større bukkirurgi, hjerneslag, alvorlig pneumoni, hematologisk kreftsykdom", "score": 2 },
+        { "value": "severe", "label": "Hodeskade, benmargstransplantasjon, intensivpasient (APACHE >10)", "score": 3 }
+      ]
+    },
+    {
+      "id": "age",
+      "label": "Alder ≥ 70 år",
+      "hint": "Gir automatisk et ekstra poeng",
+      "kind": "SingleChoice",
+      "options": [
+        { "value": "no", "label": "Nei, under 70 år", "score": 0 },
+        { "value": "yes", "label": "Ja, 70 år eller eldre", "score": 1 }
+      ]
+    }
+  ],
+  "scoring": {
+    "riskBands": [
+      { "id": "noRisk", "label": "INGEN ERNÆRINGSMESSIG RISIKO", "minTotal": 0, "maxTotal": 2, "color": "#22C55E" },
+      { "id": "atRisk", "label": "ERNÆRINGSMESSIG RISIKO - START ERNÆRINGSPLAN", "minTotal": 3, "color": "#EF4444" }
+    ],
+    "escalateOnAnyMaxScore": false
+  }
+}

@@ -1,0 +1,142 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:NewsScoreApp.ViewModels"
+             x:Class="NewsScoreApp.Views.AiFillPage"
+             x:Name="RootPage"
+             x:DataType="vm:AiFillViewModel"
+             Title="✨ Lytt og fyll ut"
+             BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundLight}, Dark={StaticResource BackgroundDark}}">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Avbryt" Command="{Binding CancelCommand}" />
+    </ContentPage.ToolbarItems>
+
+    <Grid RowDefinitions="Auto,*,Auto" Padding="16" RowSpacing="14">
+
+        <!-- Transcript box - always visible, always editable. This is meant to stand in for a
+             live speech-to-text feed during an actual patient conversation: as text grows here,
+             the checklist below reacts within a fraction of a second. -->
+        <VerticalStackLayout Grid.Row="0" Spacing="8">
+            <Grid ColumnDefinitions="*,Auto">
+                <Label Text="Transkript / notat" Style="{StaticResource FieldLabelStyle}" VerticalOptions="Center" />
+                <Button Grid.Column="1" Text="Bruk eksempeltekst" FontSize="13" Padding="10,4"
+                        BackgroundColor="Transparent" TextColor="{StaticResource Accent}"
+                        Command="{Binding UseSampleCommand}" />
+            </Grid>
+            <Border Style="{StaticResource InputBorderStyle}" Padding="12" HeightRequest="130">
+                <Editor Text="{Binding InputText}" BackgroundColor="Transparent"
+                        Placeholder="Begynn å skrive eller diktere samtalen med pasienten…"
+                        TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}" />
+            </Border>
+
+            <!-- Manual trigger takes half width; the other half is a compact "Auto"-toggle so a
+                 clinician can opt into word-count-gated automatic analysis (see
+                 AiFillViewModel.MaybeScheduleAutoAnalyze) without a separate settings row. -->
+            <Grid ColumnDefinitions="*,*" ColumnSpacing="10">
+                <Button Text="✨ Analyser teksten" HeightRequest="46" CornerRadius="14" FontSize="15" FontAttributes="Bold"
+                        BackgroundColor="{AppThemeBinding Light=#E6EEFF, Dark=#1E2A3D}" TextColor="{StaticResource Accent}"
+                        Command="{Binding AnalyzeCommand}" IsEnabled="{Binding CanAnalyze}" />
+                <Border Grid.Column="1" Style="{StaticResource InputBorderStyle}" HeightRequest="46" Padding="14,0">
+                    <Grid ColumnDefinitions="*,Auto">
+                        <Label Text="Auto" VerticalOptions="Center"
+                               TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}" />
+                        <Switch Grid.Column="1" IsToggled="{Binding AutoAnalyzeEnabled}"
+                                VerticalOptions="Center" Scale="0.8" />
+                    </Grid>
+                </Border>
+            </Grid>
+
+            <!-- Status row: progress ("X av Y felt funnet") on the left, tappable engine-status
+                 label on the right - tapping it opens an action sheet to switch AI tier
+                 (Auto/On-device/Sky/Regex) instead of needing a separate always-visible Picker
+                 row, so this stays a single compact line. -->
+            <Grid ColumnDefinitions="*,Auto">
+                <HorizontalStackLayout Spacing="6">
+                    <ActivityIndicator IsRunning="{Binding IsAnalyzing}" IsVisible="{Binding IsAnalyzing}"
+                                        Color="{StaticResource Accent}" WidthRequest="16" HeightRequest="16" />
+                    <Label Text="{Binding ProgressText}" Style="{StaticResource HintStyle}" VerticalOptions="Center" />
+                </HorizontalStackLayout>
+                <Label Grid.Column="1" Text="{Binding EngineLabel}" FontSize="11"
+                       Style="{StaticResource HintStyle}" VerticalOptions="Center" HorizontalTextAlignment="End">
+                    <Label.GestureRecognizers>
+                        <TapGestureRecognizer Tapped="OnEngineLabelTapped" />
+                    </Label.GestureRecognizers>
+                </Label>
+            </Grid>
+
+            <!-- Wrappable (2-3 line) error banner, shown only when the last analysis failed -
+                 tap to copy the full error text to the clipboard for reporting/debugging. -->
+            <Border IsVisible="{Binding HasError}" Padding="10,8"
+                    BackgroundColor="{AppThemeBinding Light=#FDECEC, Dark=#3A1F1F}"
+                    StrokeShape="RoundRectangle 10">
+                <Border.GestureRecognizers>
+                    <TapGestureRecognizer Command="{Binding CopyErrorCommand}" />
+                </Border.GestureRecognizers>
+                <VerticalStackLayout Spacing="2">
+                    <Label Text="{Binding LastErrorText}" TextColor="#B3261E" FontSize="12"
+                           LineBreakMode="WordWrap" MaxLines="3" />
+                    <Label Text="Trykk for å kopiere" TextColor="#B3261E" FontSize="10" FontAttributes="Italic" />
+                </VerticalStackLayout>
+            </Border>
+        </VerticalStackLayout>
+
+        <!-- Live checklist - one row per field in the active recipe, always present, so it's
+             immediately obvious what's still missing while the conversation continues. -->
+        <ScrollView Grid.Row="1">
+            <VerticalStackLayout Spacing="10" BindableLayout.ItemsSource="{Binding Checklist}">
+                <BindableLayout.ItemTemplate>
+                    <DataTemplate x:DataType="vm:ChecklistItemViewModel">
+                        <Border Style="{StaticResource CardStyle}" Padding="14,12">
+                            <VerticalStackLayout Spacing="6">
+                                <Grid ColumnDefinitions="Auto,*,Auto,Auto" ColumnSpacing="8">
+                                    <Label Text="{Binding StatusIcon}" FontSize="16" VerticalOptions="Center" />
+                                    <Label Grid.Column="1" Text="{Binding Label}"
+                                           FontAttributes="Bold" FontSize="15" VerticalOptions="Center"
+                                           TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}" />
+                                    <Label Grid.Column="2" Text="{Binding DisplayValue}" FontSize="15" FontAttributes="Bold"
+                                           VerticalOptions="Center" TextColor="{StaticResource Accent}"
+                                           IsVisible="{Binding IsFilled}" />
+                                    <Label Grid.Column="2" Text="Ikke nevnt ennå" FontSize="13"
+                                           VerticalOptions="Center" Style="{StaticResource HintStyle}"
+                                           IsVisible="{Binding IsFilled, Converter={StaticResource EqualToBoolConverter}, ConverterParameter=False}" />
+                                    <Button Grid.Column="3" Text="✕" FontSize="13" Padding="8,4"
+                                            BackgroundColor="Transparent"
+                                            TextColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}"
+                                            IsVisible="{Binding IsFilled}"
+                                            Command="{Binding Source={x:Reference RootPage}, Path=BindingContext.RejectFieldCommand}"
+                                            CommandParameter="{Binding .}" />
+                                </Grid>
+
+                                <!-- Choice-field hint: lists the available options as a compact
+                                     comma-separated line so the clinician knows what to ask the
+                                     patient about even before an AI suggestion lands. Only shown
+                                     for single-choice fields (numeric fields already show a range
+                                     via the field's own Hint elsewhere). -->
+                                <Label Text="{Binding OptionsHint}" FontSize="12"
+                                       Style="{StaticResource HintStyle}" LineBreakMode="WordWrap"
+                                       IsVisible="{Binding HasOptionsHint}" />
+
+                                <Button Text="🧠 Vis resonnering" FontSize="12" Padding="0" BackgroundColor="Transparent"
+                                        TextColor="{StaticResource Accent}" HorizontalOptions="Start"
+                                        IsVisible="{Binding IsFilled}"
+                                        Command="{Binding Source={x:Reference RootPage}, Path=BindingContext.ToggleReasoningCommand}"
+                                        CommandParameter="{Binding .}" />
+
+                                <VerticalStackLayout Spacing="4" IsVisible="{Binding IsReasoningExpanded}">
+                                    <Label Text="{Binding SourceQuote}" FontAttributes="Italic" Style="{StaticResource HintStyle}" />
+                                    <Label Text="{Binding Reasoning}" Style="{StaticResource HintStyle}" />
+                                </VerticalStackLayout>
+                            </VerticalStackLayout>
+                        </Border>
+                    </DataTemplate>
+                </BindableLayout.ItemTemplate>
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <!-- Commit step - the only point where staged suggestions actually touch the real form. -->
+        <Button Grid.Row="2" Text="✓ Fyll inn i skjema" Style="{StaticResource PrimaryButtonStyle}"
+                Command="{Binding CommitCommand}" IsEnabled="{Binding CanCommit}" />
+
+    </Grid>
+</ContentPage>

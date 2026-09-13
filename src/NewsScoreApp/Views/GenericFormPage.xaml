@@ -1,0 +1,229 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:NewsScoreApp.ViewModels"
+             xmlns:controls="clr-namespace:NewsScoreApp.Controls"
+             xmlns:formModels="clr-namespace:NewsScoreApp.Models.FormEngine"
+             xmlns:views="clr-namespace:NewsScoreApp.Views"
+             x:Class="NewsScoreApp.Views.GenericFormPage"
+             x:DataType="vm:GenericFormViewModel"
+             Shell.NavBarIsVisible="False">
+
+    <ContentPage.Resources>
+
+        <!-- Numeric field: label + unit + score chips + entry with keyboard prev/next -->
+        <DataTemplate x:Key="NumericFieldTemplate" x:DataType="vm:GenericFieldViewModel">
+            <Border x:Name="FieldCard" Style="{StaticResource CardStyle}" Loaded="OnFieldCardLoaded">
+                <VerticalStackLayout Spacing="8">
+                    <HorizontalStackLayout Spacing="6">
+                        <Label Text="{Binding Label}" Style="{StaticResource FieldLabelStyle}" />
+                        <Label Text="{Binding Unit}" Style="{StaticResource FieldUnitStyle}" VerticalOptions="Center" />
+                    </HorizontalStackLayout>
+                    <Border Style="{StaticResource InputBorderStyle}"
+                            Stroke="{Binding IsInvalid, Converter={StaticResource InvalidToStrokeColorConverter}}"
+                            StrokeThickness="{Binding IsInvalid, Converter={StaticResource InvalidToThicknessConverter}}">
+                        <Entry x:Name="FieldEntry" Style="{StaticResource VitalEntryStyle}"
+                               Text="{Binding TextValue}" MaxLength="5"
+                               Loaded="OnFieldEntryLoaded"
+                               Focused="OnFieldEntryFocused"
+                               controls:KeyboardNav.HasPrevious="{Binding HasPrevious}"
+                               controls:KeyboardNav.HasNext="{Binding HasNext}"
+                               controls:KeyboardNav.PreviousCommand="{Binding PreviousCommand}"
+                               controls:KeyboardNav.NextCommand="{Binding NextCommand}" />
+                    </Border>
+                    <!-- Hint and the "obligatorisk" validation message share one row below the
+                         input (not beside it, so long reference-range text never squeezes the
+                         entry narrow). The validation message takes only the width it needs on
+                         the left; the hint fills the rest, right-aligned, and wraps onto extra
+                         lines of its own if there isn't room left for both on one line. -->
+                    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="8">
+                        <Label Grid.Column="0" Text="{Binding ValidationMessage}" TextColor="Red" FontSize="13"
+                               IsVisible="{Binding IsInvalid}" />
+                        <Label Grid.Column="1" Text="{Binding Hint}" Style="{StaticResource HintStyle}"
+                               HorizontalTextAlignment="End" LineBreakMode="WordWrap" />
+                    </Grid>
+                </VerticalStackLayout>
+            </Border>
+        </DataTemplate>
+
+        <!-- Single-choice field: label + a vertical list of full-width choice buttons. One choice
+             per row (rather than a 2-column grid) so long clinical descriptions (Braden, NRS2002,
+             GCS) always wrap fully instead of being clipped. -->
+        <DataTemplate x:Key="ChoiceFieldTemplate" x:DataType="vm:GenericFieldViewModel">
+            <Border x:Name="FieldCard" Style="{StaticResource CardStyle}" Loaded="OnFieldCardLoaded"
+                    Stroke="{Binding IsInvalid, Converter={StaticResource InvalidToStrokeColorConverter}}"
+                    StrokeThickness="{Binding IsInvalid, Converter={StaticResource InvalidToThicknessConverter}}">
+                <VerticalStackLayout Spacing="10">
+                    <Label Text="{Binding Label}" Style="{StaticResource FieldLabelStyle}" />
+                    <VerticalStackLayout Spacing="8" BindableLayout.ItemsSource="{Binding Options}">
+                        <BindableLayout.ItemTemplate>
+                            <DataTemplate x:DataType="vm:OptionItemViewModel">
+                                <Button Text="{Binding Option.Label}" Style="{StaticResource ChoiceCardStyle}"
+                                        Command="{Binding SelectCommand}" CommandParameter="{Binding Option.Value}"
+                                        BackgroundColor="{Binding IsSelected, Converter={StaticResource SelectedToColorConverter}}" />
+                            </DataTemplate>
+                        </BindableLayout.ItemTemplate>
+                    </VerticalStackLayout>
+                    <Label Text="{Binding ValidationMessage}" TextColor="Red" FontSize="13"
+                           IsVisible="{Binding IsInvalid}" />
+                </VerticalStackLayout>
+            </Border>
+        </DataTemplate>
+
+        <!-- Free-text field: label + multi-line Editor for narrative sections (e.g. epikrise). No
+             score chips (never scored) and no side-by-side hint squeeze, same as NumericFieldTemplate. -->
+        <DataTemplate x:Key="TextFieldTemplate" x:DataType="vm:GenericFieldViewModel">
+            <Border x:Name="FieldCard" Style="{StaticResource CardStyle}" Loaded="OnFieldCardLoaded">
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="{Binding Label}" Style="{StaticResource FieldLabelStyle}" />
+                    <Border Style="{StaticResource InputBorderStyle}"
+                            Stroke="{Binding IsInvalid, Converter={StaticResource InvalidToStrokeColorConverter}}"
+                            StrokeThickness="{Binding IsInvalid, Converter={StaticResource InvalidToThicknessConverter}}">
+                        <Editor x:Name="FieldEntry" Style="{StaticResource NarrativeEditorStyle}"
+                                Text="{Binding TextValue}" Placeholder="{Binding Placeholder}"
+                                Loaded="OnFieldEntryLoaded"
+                                Focused="OnFieldEntryFocused"
+                                controls:KeyboardNav.HasPrevious="{Binding HasPrevious}"
+                                controls:KeyboardNav.HasNext="{Binding HasNext}"
+                                controls:KeyboardNav.PreviousCommand="{Binding PreviousCommand}"
+                                controls:KeyboardNav.NextCommand="{Binding NextCommand}" />
+                    </Border>
+                    <Grid ColumnDefinitions="Auto,*" ColumnSpacing="8">
+                        <Label Grid.Column="0" Text="{Binding ValidationMessage}" TextColor="Red" FontSize="13"
+                               IsVisible="{Binding IsInvalid}" />
+                        <Label Grid.Column="1" Text="{Binding Hint}" Style="{StaticResource HintStyle}"
+                               HorizontalTextAlignment="End" LineBreakMode="WordWrap" />
+                    </Grid>
+                </VerticalStackLayout>
+            </Border>
+        </DataTemplate>
+
+        <views:FieldTemplateSelector x:Key="FieldTemplateSelector"
+                                      NumericTemplate="{StaticResource NumericFieldTemplate}"
+                                      ChoiceTemplate="{StaticResource ChoiceFieldTemplate}"
+                                      TextTemplate="{StaticResource TextFieldTemplate}" />
+
+    </ContentPage.Resources>
+
+    <Grid RowDefinitions="*,Auto">
+
+        <ScrollView x:Name="RootScroll" Grid.Row="0">
+            <VerticalStackLayout Padding="16" Spacing="18">
+
+                <!-- Settings entry point (gear icon) - form picker, auto-advance and theme toggle
+                     now live on a dedicated SettingsPage, mirroring iOS's own Settings app instead
+                     of cluttering the top of the form with three separate controls. AI auto-fill
+                     (✨) sits right next to it, hidden once the form has been submitted, and the
+                     trend chart (📈) is always available (for scored recipes only - a document-
+                     style recipe like a structured epikrise has no score/risk band to trend). -->
+                <Grid ColumnDefinitions="*,Auto,Auto,Auto" ColumnSpacing="4">
+                    <Button Grid.Column="1" Text="✨" FontSize="20" Padding="8"
+                            BackgroundColor="Transparent"
+                            IsVisible="{Binding IsSubmitted, Converter={StaticResource EqualToBoolConverter}, ConverterParameter=False}"
+                            Clicked="OnAiFillClicked" />
+                    <Button Grid.Column="2" Text="📈" FontSize="20" Padding="8"
+                            BackgroundColor="Transparent"
+                            IsVisible="{Binding CurrentRecipe.IsScored}"
+                            Clicked="OnHistoryClicked" />
+                    <Button Grid.Column="3" Text="⚙️" FontSize="22" Padding="8"
+                            BackgroundColor="Transparent"
+                            Clicked="OnSettingsClicked" />
+                </Grid>
+
+                <!-- Header -->
+                <VerticalStackLayout Spacing="4" Margin="0,4,0,0">
+                    <Border WidthRequest="80" HeightRequest="80"
+                            HorizontalOptions="Center"
+                            BackgroundColor="{AppThemeBinding Light={StaticResource ChipInactiveBackgroundLight}, Dark={StaticResource ChipInactiveBackgroundDark}}">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="40" />
+                        </Border.StrokeShape>
+                        <Label Text="{Binding CurrentRecipe.Icon}" FontSize="34" HorizontalOptions="Center" VerticalOptions="Center" />
+                    </Border>
+                    <Label Text="{Binding CurrentRecipe.Title}" Style="{StaticResource TitleStyle}" />
+                    <Label Text="{Binding CurrentRecipe.Subtitle}" Style="{StaticResource SubtitleStyle}" />
+                </VerticalStackLayout>
+
+                <!-- Date / time -->
+                <Border Style="{StaticResource CardStyle}">
+                    <Grid ColumnDefinitions="*,Auto,Auto" ColumnSpacing="10">
+                        <Label Text="Dato" Style="{StaticResource FieldLabelStyle}" VerticalOptions="Center" />
+                        <DatePicker Grid.Column="1" Date="{Binding RegistrationDate}" Format="d. MMM. yyyy" FontSize="15" />
+                        <TimePicker Grid.Column="2" Time="{Binding RegistrationTime}" Format="HH:mm" FontSize="15" />
+                    </Grid>
+                </Border>
+
+                <!-- Dynamically rendered fields - one card per FormSection in the current recipe -->
+                <VerticalStackLayout x:Name="FieldsHost" Spacing="18"
+                                      BindableLayout.ItemsSource="{Binding Fields}"
+                                      BindableLayout.ItemTemplateSelector="{StaticResource FieldTemplateSelector}" />
+
+                <!-- Score summary - only meaningful for scored recipes (a document-style recipe
+                     like a structured epikrise has no total/risk band to show here at all). -->
+                <Border x:Name="ScoreSummaryCard" Style="{StaticResource CardStyle}"
+                        BackgroundColor="{Binding Result.RiskBand.Color, Converter={StaticResource HexColorConverter}}"
+                        IsVisible="{Binding CurrentRecipe.IsScored}"
+                        Opacity="0.92">
+                    <VerticalStackLayout Spacing="10">
+                        <Label Text="{Binding Result.RiskBand.Label}" FontAttributes="Bold" FontSize="15"
+                               IsVisible="{Binding CanSubmit}" TextColor="Black" />
+
+                        <Grid ColumnDefinitions="*,Auto">
+                            <Label Text="Samlet score" Style="{StaticResource FieldLabelStyle}" VerticalOptions="Center" />
+                            <Border Grid.Column="1" Padding="14,6" BackgroundColor="White" IsVisible="{Binding CanSubmit}">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="14" />
+                                </Border.StrokeShape>
+                                <Label Text="{Binding Result.TotalScore}" FontSize="22" FontAttributes="Bold" TextColor="Black" />
+                            </Border>
+                        </Grid>
+
+                        <Label Text="Fyll inn alle felt for å beregne score" Style="{StaticResource HintStyle}"
+                               IsVisible="{Binding CanSubmit, Converter={StaticResource EqualToBoolConverter}, ConverterParameter=False}" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Confirmation panel after submit -->
+                <Border x:Name="ConfirmationCard" Style="{StaticResource CardStyle}" IsVisible="{Binding IsSubmitted}">
+                    <VerticalStackLayout Spacing="10">
+                        <HorizontalStackLayout Spacing="8">
+                            <Label Text="✓" TextColor="{StaticResource RiskLowColor}" FontAttributes="Bold" FontSize="18" />
+                            <Label Text="Lagret i journal" FontAttributes="Bold" FontSize="16"
+                                   TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}" />
+                        </HorizontalStackLayout>
+                        <Label Text="{Binding SubmittedTimestamp}" Style="{StaticResource HintStyle}" />
+                        <HorizontalStackLayout Spacing="24">
+                            <VerticalStackLayout>
+                                <Label Text="Utfyllingstid" Style="{StaticResource HintStyle}" />
+                                <Label Text="{Binding ElapsedDisplay}" FontSize="20" FontAttributes="Bold" />
+                            </VerticalStackLayout>
+                            <VerticalStackLayout IsVisible="{Binding CurrentRecipe.IsScored}">
+                                <Label Text="Score" Style="{StaticResource HintStyle}" />
+                                <Label Text="{Binding Result.TotalScore}" FontSize="20" FontAttributes="Bold" />
+                            </VerticalStackLayout>
+                        </HorizontalStackLayout>
+                        <Button Text="Ny registrering" Style="{StaticResource ChoiceCardStyle}" Command="{Binding NewRegistrationCommand}" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <BoxView HeightRequest="8" Color="Transparent" />
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <!-- Sticky footer -->
+        <Border Grid.Row="1" Padding="16,10" StrokeThickness="0"
+                BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundLight}, Dark={StaticResource BackgroundDark}}"
+                IsVisible="{Binding IsSubmitted, Converter={StaticResource EqualToBoolConverter}, ConverterParameter=False}">
+            <VerticalStackLayout Spacing="6">
+                <HorizontalStackLayout Spacing="6" HorizontalOptions="Center" IsVisible="{Binding IsTimerRunning}">
+                    <BoxView Color="{StaticResource Accent}" WidthRequest="8" HeightRequest="8" CornerRadius="4" VerticalOptions="Center" />
+                    <Label Text="{Binding ElapsedDisplay}" Style="{StaticResource HintStyle}" />
+                </HorizontalStackLayout>
+                <Button Style="{StaticResource PrimaryButtonStyle}"
+                        Command="{Binding SubmitCommand}"
+                        Text="{Binding SubmitButtonText}" />
+            </VerticalStackLayout>
+        </Border>
+
+    </Grid>
+</ContentPage>

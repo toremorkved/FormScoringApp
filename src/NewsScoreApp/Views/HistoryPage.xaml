@@ -1,0 +1,87 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:NewsScoreApp.ViewModels"
+             xmlns:history="clr-namespace:NewsScoreApp.Models.History"
+             x:Class="NewsScoreApp.Views.HistoryPage"
+             x:DataType="vm:HistoryViewModel"
+             Title="{Binding RecipeTitle}"
+             BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundLight}, Dark={StaticResource BackgroundDark}}">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Ferdig" Clicked="OnDoneClicked" />
+    </ContentPage.ToolbarItems>
+
+    <ScrollView>
+        <VerticalStackLayout Padding="16" Spacing="20">
+
+            <!-- Empty state - shown until at least one assessment has been submitted for this
+                 recipe, since there is nothing meaningful to chart yet. -->
+            <VerticalStackLayout IsVisible="{Binding IsEmpty}" Spacing="8" Margin="0,60,0,0"
+                                  HorizontalOptions="Center">
+                <Label Text="📈" FontSize="40" HorizontalOptions="Center" />
+                <Label Text="Ingen historikk ennå" FontAttributes="Bold" HorizontalOptions="Center"
+                       TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}" />
+                <Label Text="Fullførte registreringer for dette skjemaet vises her som en trendgraf."
+                       Style="{StaticResource HintStyle}" HorizontalOptions="Center"
+                       HorizontalTextAlignment="Center" Margin="24,0,24,0" />
+            </VerticalStackLayout>
+
+            <VerticalStackLayout IsVisible="{Binding IsEmpty, Converter={StaticResource EqualToBoolConverter}, ConverterParameter=False}"
+                                  Spacing="20">
+
+                <!-- Trend chart -->
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="TOTALSCORE OVER TID" FontSize="13" FontAttributes="Bold"
+                           TextColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}"
+                           Margin="8,0,0,0" />
+                    <Border Style="{StaticResource CardStyle}" Padding="8">
+                        <GraphicsView x:Name="TrendChart" HeightRequest="220" />
+                    </Border>
+                </VerticalStackLayout>
+
+                <!-- Recent measurements list -->
+                <VerticalStackLayout Spacing="8">
+                    <Label Text="SENESTE MÅLINGER" FontSize="13" FontAttributes="Bold"
+                           TextColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}"
+                           Margin="8,0,0,0" />
+                    <Border Style="{StaticResource CardStyle}" Padding="0">
+                        <VerticalStackLayout BindableLayout.ItemsSource="{Binding EntriesNewestFirst}">
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate x:DataType="history:AssessmentHistoryEntry">
+                                    <VerticalStackLayout>
+                                        <Grid ColumnDefinitions="Auto,*,Auto" Padding="16,12" ColumnSpacing="10">
+                                            <Border Grid.Column="0" WidthRequest="10" HeightRequest="10"
+                                                    StrokeThickness="0" VerticalOptions="Center"
+                                                    BackgroundColor="{Binding RiskBandColor, Converter={StaticResource HexColorConverter}}">
+                                                <Border.StrokeShape>
+                                                    <RoundRectangle CornerRadius="5" />
+                                                </Border.StrokeShape>
+                                            </Border>
+                                            <VerticalStackLayout Grid.Column="1" Spacing="2">
+                                                <Label Text="{Binding Timestamp, StringFormat='{0:dd.MM.yyyy HH:mm}'}"
+                                                       TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}" />
+                                                <Label Text="{Binding RiskBandLabel}" Style="{StaticResource HintStyle}" />
+                                            </VerticalStackLayout>
+                                            <Label Grid.Column="2" Text="{Binding TotalScore}" FontAttributes="Bold" FontSize="20"
+                                                   VerticalOptions="Center"
+                                                   TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}" />
+                                        </Grid>
+                                        <BoxView HeightRequest="1" Margin="16,0"
+                                                 Color="{AppThemeBinding Light={StaticResource InputBorderLight}, Dark={StaticResource InputBorderDark}}" />
+                                    </VerticalStackLayout>
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </VerticalStackLayout>
+                    </Border>
+                </VerticalStackLayout>
+
+                <Button Text="Tøm historikk" BackgroundColor="Transparent" TextColor="#EF4444"
+                        Command="{Binding ClearHistoryCommand}" />
+
+            </VerticalStackLayout>
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>

@@ -1,0 +1,88 @@
+{
+  "id": "braden",
+  "title": "Trykksår-screening",
+  "subtitle": "Braden-skala for risiko for trykksår",
+  "icon": "🛏️",
+  "sections": [
+    {
+      "id": "sensory",
+      "label": "Sensorisk oppfatning",
+      "hint": "Evne til å reagere hensiktsmessig på trykk-relatert ubehag",
+      "kind": "SingleChoice",
+      "options": [
+        { "value": "none", "label": "Helt manglende", "score": 1 },
+        { "value": "very_limited", "label": "Svært begrenset", "score": 2 },
+        { "value": "slightly_limited", "label": "Litt begrenset", "score": 3 },
+        { "value": "no_impairment", "label": "Ingen svekkelse", "score": 4 }
+      ]
+    },
+    {
+      "id": "moisture",
+      "label": "Fuktighet",
+      "hint": "Grad av hudfuktighet",
+      "kind": "SingleChoice",
+      "options": [
+        { "value": "constantly_moist", "label": "Konstant fuktig", "score": 1 },
+        { "value": "very_moist", "label": "Meget fuktig", "score": 2 },
+        { "value": "occasionally_moist", "label": "Av og til fuktig", "score": 3 },
+        { "value": "rarely_moist", "label": "Sjelden fuktig", "score": 4 }
+      ]
+    },
+    {
+      "id": "activity",
+      "label": "Aktivitet",
+      "hint": "Grad av fysisk aktivitet",
+      "kind": "SingleChoice",
+      "options": [
+        { "value": "bedfast", "label": "Sengeliggende", "score": 1 },
+        { "value": "chairfast", "label": "Stolavhengig", "score": 2 },
+        { "value": "walks_occasionally", "label": "Går av og til", "score": 3 },
+        { "value": "walks_frequently", "label": "Går ofte", "score": 4 }
+      ]
+    },
+    {
+      "id": "mobility",
+      "label": "Mobilitet",
+      "hint": "Evne til å endre og kontrollere kroppsstilling",
+      "kind": "SingleChoice",
+      "options": [
+        { "value": "completely_immobile", "label": "Helt immobil", "score": 1 },
+        { "value": "very_limited", "label": "Svært begrenset", "score": 2 },
+        { "value": "slightly_limited", "label": "Litt begrenset", "score": 3 },
+        { "value": "no_limitation", "label": "Ingen begrensning", "score": 4 }
+      ]
+    },
+    {
+      "id": "nutrition",
+      "label": "Ernæring",
+      "hint": "Vanlig ernæringsinntak",
+      "kind": "SingleChoice",
+      "options": [
+        { "value": "very_poor", "label": "Svært dårlig", "score": 1 },
+        { "value": "probably_inadequate", "label": "Sannsynligvis utilstrekkelig", "score": 2 },
+        { "value": "adequate", "label": "Tilstrekkelig", "score": 3 },
+        { "value": "excellent", "label": "Utmerket", "score": 4 }
+      ]
+    },
+    {
+      "id": "friction",
+      "label": "Friksjon og skjærkrefter",
+      "kind": "SingleChoice",
+      "options": [
+        { "value": "problem", "label": "Er et problem", "score": 1 },
+        { "value": "potential_problem", "label": "Er et potensielt problem", "score": 2 },
+        { "value": "no_apparent_problem", "label": "Ikke noe åpenbart problem", "score": 3 }
+      ]
+    }
+  ],
+  "scoring": {
+    "riskBands": [
+      { "id": "severe", "label": "SVÆRT HØY RISIKO", "minTotal": 6, "maxTotal": 9, "color": "#EF4444" },
+      { "id": "high", "label": "HØY RISIKO", "minTotal": 10, "maxTotal": 12, "color": "#F97316" },
+      { "id": "moderate", "label": "MODERAT RISIKO", "minTotal": 13, "maxTotal": 14, "color": "#EAB308" },
+      { "id": "mild", "label": "LAV RISIKO", "minTotal": 15, "maxTotal": 18, "color": "#84CC16" },
+      { "id": "none", "label": "INGEN RISIKO", "minTotal": 19, "color": "#22C55E" }
+    ],
+    "escalateOnAnyMaxScore": false
+  }
+}

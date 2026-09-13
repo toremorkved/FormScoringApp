@@ -1,0 +1,353 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:NewsScoreApp.ViewModels"
+             xmlns:controls="clr-namespace:NewsScoreApp.Controls"
+             xmlns:models="clr-namespace:NewsScoreApp.Models"
+             x:Class="NewsScoreApp.Views.MainPage"
+             x:DataType="vm:MainViewModel"
+             Shell.NavBarIsVisible="False">
+
+    <Grid RowDefinitions="*,Auto">
+
+        <ScrollView x:Name="RootScroll" Grid.Row="0">
+            <VerticalStackLayout Padding="16" Spacing="18">
+
+                <!-- Top toolbar: auto-advance + theme toggles -->
+                <Grid ColumnDefinitions="*,Auto,Auto,Auto,Auto" ColumnSpacing="8">
+                    <Label Grid.Column="1" Text="Auto" VerticalOptions="Center" FontAttributes="Bold"
+                           TextColor="{StaticResource Accent}" />
+                    <Switch Grid.Column="2" IsToggled="{Binding AutoAdvanceEnabled}" />
+                    <Label Grid.Column="3" Text="🌙" FontSize="18" VerticalOptions="Center"
+                           IsVisible="{Binding IsLightMode, Converter={StaticResource EqualToBoolConverter}, ConverterParameter=False}" />
+                    <Label Grid.Column="3" Text="☀️" FontSize="18" VerticalOptions="Center"
+                           IsVisible="{Binding IsLightMode}" />
+                    <Switch Grid.Column="4" IsToggled="{Binding IsLightMode}" />
+                </Grid>
+
+                <!-- Header -->
+                <VerticalStackLayout Spacing="4" Margin="0,4,0,0">
+                    <Border WidthRequest="80" HeightRequest="80"
+                            HorizontalOptions="Center"
+                            BackgroundColor="{AppThemeBinding Light={StaticResource ChipInactiveBackgroundLight}, Dark={StaticResource ChipInactiveBackgroundDark}}">
+                        <Border.StrokeShape>
+                            <RoundRectangle CornerRadius="40" />
+                        </Border.StrokeShape>
+                        <Label Text="🫀" FontSize="34" HorizontalOptions="Center" VerticalOptions="Center" />
+                    </Border>
+                    <Label Text="NEWS Score" Style="{StaticResource TitleStyle}" />
+                    <Label Text="National Early Warning Score" Style="{StaticResource SubtitleStyle}" />
+                </VerticalStackLayout>
+
+                <!-- Date / time -->
+                <Border Style="{StaticResource CardStyle}">
+                    <Grid ColumnDefinitions="*,Auto,Auto" ColumnSpacing="10">
+                        <Label Text="Dato" Style="{StaticResource FieldLabelStyle}" VerticalOptions="Center" />
+                        <DatePicker Grid.Column="1" Date="{Binding RegistrationDate}" Format="d. MMM. yyyy" FontSize="15" />
+                        <TimePicker Grid.Column="2" Time="{Binding RegistrationTime}" Format="HH:mm" FontSize="15" />
+                    </Grid>
+                </Border>
+
+                <!-- Respirasjonsfrekvens -->
+                <Border x:Name="SecRr" Style="{StaticResource CardStyle}">
+                    <VerticalStackLayout Spacing="8">
+                        <Grid ColumnDefinitions="*,Auto,Auto,Auto,Auto">
+                            <HorizontalStackLayout Spacing="6">
+                                <Label Text="Respirasjonsfrekvens" Style="{StaticResource FieldLabelStyle}" />
+                                <Label Text="pust/min" Style="{StaticResource FieldUnitStyle}" VerticalOptions="Center" />
+                            </HorizontalStackLayout>
+                            <Label Grid.Column="1" Text="3" Style="{StaticResource ScoreChipStyle}"
+                                   BackgroundColor="{Binding RrScore, Converter={StaticResource ScoreChipColorConverter}, ConverterParameter=3}" />
+                            <Label Grid.Column="2" Text="2" Style="{StaticResource ScoreChipStyle}"
+                                   BackgroundColor="{Binding RrScore, Converter={StaticResource ScoreChipColorConverter}, ConverterParameter=2}" />
+                            <Label Grid.Column="3" Text="1" Style="{StaticResource ScoreChipStyle}"
+                                   BackgroundColor="{Binding RrScore, Converter={StaticResource ScoreChipColorConverter}, ConverterParameter=1}" />
+                            <Label Grid.Column="4" Text="0" Style="{StaticResource ScoreChipStyle}"
+                                   BackgroundColor="{Binding RrScore, Converter={StaticResource ScoreChipColorConverter}, ConverterParameter=0}" />
+                        </Grid>
+                        <Border Style="{StaticResource InputBorderStyle}">
+                            <Grid ColumnDefinitions="*,Auto">
+                                <Entry x:Name="EntryRr" Style="{StaticResource VitalEntryStyle}" Placeholder="f.eks. 16"
+                                       Text="{Binding RespiratoryRateText}" MaxLength="2"
+                                       controls:KeyboardNav.HasNext="True"
+                                       controls:KeyboardNav.NextCommand="{Binding FocusSpo2Command}" />
+                                <Label Grid.Column="1" Text="Normalt: 12–20" Style="{StaticResource HintStyle}" VerticalOptions="End" Margin="0,0,0,6" />
+                            </Grid>
+                        </Border>
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Oksygenmetning -->
+                <Border x:Name="SecSpo2" Style="{StaticResource CardStyle}">
+                    <VerticalStackLayout Spacing="8">
+                        <Grid ColumnDefinitions="*,Auto,Auto,Auto,Auto">
+                            <HorizontalStackLayout Spacing="6">
+                                <Label Text="Oksygenmetning" Style="{StaticResource FieldLabelStyle}" />
+                                <Label Text="SpO₂ %" Style="{StaticResource FieldUnitStyle}" VerticalOptions="Center" />
+                            </HorizontalStackLayout>
+                            <Label Grid.Column="1" Text="3" Style="{StaticResource ScoreChipStyle}"
+                                   BackgroundColor="{Binding Spo2Score, Converter={StaticResource ScoreChipColorConverter}, ConverterParameter=3}" />
+                            <Label Grid.Column="2" Text="2" Style="{StaticResource ScoreChipStyle}"
+                                   BackgroundColor="{Binding Spo2Score, Converter={StaticResource ScoreChipColorConverter}, ConverterParameter=2}" />
+                            <Label Grid.Column="3" Text="1" Style="{StaticResource ScoreChipStyle}"
+                                   BackgroundColor="{Binding Spo2Score, Converter={StaticResource ScoreChipColorConverter}, ConverterParameter=1}" />
+                            <Label Grid.Column="4" Text="0" Style="{StaticResource ScoreChipStyle}"
+                                   BackgroundColor="{Binding Spo2Score, Converter={StaticResource ScoreChipColorConverter}, ConverterParameter=0}" />
+                        </Grid>
+                        <Border Style="{StaticResource InputBorderStyle}">
+                            <Grid ColumnDefinitions="*,Auto">
+                                <Entry x:Name="EntrySpo2" Style="{StaticResource VitalEntryStyle}" Placeholder="f.eks. 98"
+                                       Text="{Binding OxygenSaturationText}" MaxLength="3"
+                                       controls:KeyboardNav.HasPrevious="True" controls:KeyboardNav.HasNext="True"
+                                       controls:KeyboardNav.PreviousCommand="{Binding FocusRrCommand}"
+                                       controls:KeyboardNav.NextCommand="{Binding FocusBpCommand}" />
+                                <Label Grid.Column="1" Text="Normalt: ≥96%" Style="{StaticResource HintStyle}" VerticalOptions="End" Margin="0,0,0,6" />
+                            </Grid>
+                        </Border>
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Oksygentilskudd -->
+                <Border x:Name="SecO2" Style="{StaticResource CardStyle}">
+                    <VerticalStackLayout Spacing="10">
+                        <Grid ColumnDefinitions="*,Auto,Auto">
+                            <Label Text="Oksygentilskudd" Style="{StaticResource FieldLabelStyle}" />
+                            <Label Grid.Column="1" Text="2" Style="{StaticResource ScoreChipStyle}"
+                                   BackgroundColor="{Binding O2Score, Converter={StaticResource ScoreChipColorConverter}, ConverterParameter=2}" />
+                            <Label Grid.Column="2" Text="0" Style="{StaticResource ScoreChipStyle}"
+                                   BackgroundColor="{Binding O2Score, Converter={StaticResource ScoreChipColorConverter}, ConverterParameter=0}" />
+                        </Grid>
+                        <Grid ColumnDefinitions="*,*" ColumnSpacing="10">
+                            <Button Text="🌬️  Romluft" Style="{StaticResource ChoiceCardStyle}"
+                                    Command="{Binding SelectOxygenSupplementCommand}" CommandParameter="air"
+                                    BackgroundColor="{Binding SelectedOxygenSupplement, Converter={StaticResource EqualToColorConverter}, ConverterParameter=None}" />
+                            <Button Grid.Column="1" Text="🫁  Oksygen" Style="{StaticResource ChoiceCardStyle}"
+                                    Command="{Binding SelectOxygenSupplementCommand}" CommandParameter="oxygen"
+                                    BackgroundColor="{Binding SelectedOxygenSupplement, Converter={StaticResource EqualToColorConverter}, ConverterParameter=Oxygen}" />
+                        </Grid>
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Systolisk blodtrykk -->
+                <Border x:Name="SecBp" Style="{StaticResource CardStyle}">
+                    <VerticalStackLayout Spacing="8">
+                        <Grid ColumnDefinitions="*,Auto,Auto,Auto,Auto">
+                            <HorizontalStackLayout Spacing="6">
+                                <Label Text="Systolisk blodtrykk" Style="{StaticResource FieldLabelStyle}" />
+                                <Label Text="mmHg" Style="{StaticResource FieldUnitStyle}" VerticalOptions="Center" />
+                            </HorizontalStackLayout>
+                            <Label Grid.Column="1" Text="3" Style="{StaticResource ScoreChipStyle}"
+                                   BackgroundColor="{Binding BpScore, Converter={StaticResource ScoreChipColorConverter}, ConverterParameter=3}" />
+                            <Label Grid.Column="2" Text="2" Style="{StaticResource ScoreChipStyle}"
+                                   BackgroundColor="{Binding BpScore, Converter={StaticResource ScoreChipColorConverter}, ConverterParameter=2}" />
+                            <Label Grid.Column="3" Text="1" Style="{StaticResource ScoreChipStyle}"
+                                   BackgroundColor="{Binding BpScore, Converter={StaticResource ScoreChipColorConverter}, ConverterParameter=1}" />
+                            <Label Grid.Column="4" Text="0" Style="{StaticResource ScoreChipStyle}"
+                                   BackgroundColor="{Binding BpScore, Converter={StaticResource ScoreChipColorConverter}, ConverterParameter=0}" />
+                        </Grid>
+                        <Border Style="{StaticResource InputBorderStyle}">
+                            <Grid ColumnDefinitions="*,Auto">
+                                <Entry x:Name="EntryBp" Style="{StaticResource VitalEntryStyle}" Placeholder="f.eks. 120"
+                                       Text="{Binding SystolicBpText}" MaxLength="3"
+                                       controls:KeyboardNav.HasPrevious="True" controls:KeyboardNav.HasNext="True"
+                                       controls:KeyboardNav.PreviousCommand="{Binding FocusSpo2Command}"
+                                       controls:KeyboardNav.NextCommand="{Binding FocusPulseCommand}" />
+                                <Label Grid.Column="1" Text="Normalt: 111–219" Style="{StaticResource HintStyle}" VerticalOptions="End" Margin="0,0,0,6" />
+                            </Grid>
+                        </Border>
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Puls -->
+                <Border x:Name="SecPulse" Style="{StaticResource CardStyle}">
+                    <VerticalStackLayout Spacing="8">
+                        <Grid ColumnDefinitions="*,Auto,Auto,Auto,Auto">
+                            <HorizontalStackLayout Spacing="6">
+                                <Label Text="Puls" Style="{StaticResource FieldLabelStyle}" />
+                                <Label Text="slag/min" Style="{StaticResource FieldUnitStyle}" VerticalOptions="Center" />
+                            </HorizontalStackLayout>
+                            <Label Grid.Column="1" Text="3" Style="{StaticResource ScoreChipStyle}"
+                                   BackgroundColor="{Binding PulseScore, Converter={StaticResource ScoreChipColorConverter}, ConverterParameter=3}" />
+                            <Label Grid.Column="2" Text="2" Style="{StaticResource ScoreChipStyle}"
+                                   BackgroundColor="{Binding PulseScore, Converter={StaticResource ScoreChipColorConverter}, ConverterParameter=2}" />
+                            <Label Grid.Column="3" Text="1" Style="{StaticResource ScoreChipStyle}"
+                                   BackgroundColor="{Binding PulseScore, Converter={StaticResource ScoreChipColorConverter}, ConverterParameter=1}" />
+                            <Label Grid.Column="4" Text="0" Style="{StaticResource ScoreChipStyle}"
+                                   BackgroundColor="{Binding PulseScore, Converter={StaticResource ScoreChipColorConverter}, ConverterParameter=0}" />
+                        </Grid>
+                        <Border Style="{StaticResource InputBorderStyle}">
+                            <Grid ColumnDefinitions="*,Auto">
+                                <Entry x:Name="EntryPulse" Style="{StaticResource VitalEntryStyle}" Placeholder="f.eks. 72"
+                                       Text="{Binding PulseText}" MaxLength="3"
+                                       controls:KeyboardNav.HasPrevious="True" controls:KeyboardNav.HasNext="True"
+                                       controls:KeyboardNav.PreviousCommand="{Binding FocusBpCommand}"
+                                       controls:KeyboardNav.NextCommand="{Binding FocusTempCommand}" />
+                                <Label Grid.Column="1" Text="Normalt: 51–90" Style="{StaticResource HintStyle}" VerticalOptions="End" Margin="0,0,0,6" />
+                            </Grid>
+                        </Border>
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Bevissthetsnivå -->
+                <Border x:Name="SecAcvpu" Style="{StaticResource CardStyle}">
+                    <VerticalStackLayout Spacing="10">
+                        <Grid ColumnDefinitions="*,Auto,Auto">
+                            <HorizontalStackLayout Spacing="6">
+                                <Label Text="Bevissthetsnivå" Style="{StaticResource FieldLabelStyle}" />
+                                <Label Text="ACVPU" Style="{StaticResource FieldUnitStyle}" VerticalOptions="Center" />
+                            </HorizontalStackLayout>
+                            <Label Grid.Column="1" Text="3" Style="{StaticResource ScoreChipStyle}"
+                                   BackgroundColor="{Binding AcvpuScore, Converter={StaticResource ScoreChipColorConverter}, ConverterParameter=3}" />
+                            <Label Grid.Column="2" Text="0" Style="{StaticResource ScoreChipStyle}"
+                                   BackgroundColor="{Binding AcvpuScore, Converter={StaticResource ScoreChipColorConverter}, ConverterParameter=0}" />
+                        </Grid>
+                        <Grid ColumnDefinitions="*,*" RowDefinitions="Auto,Auto,Auto" ColumnSpacing="10" RowSpacing="10">
+                            <Button Text="👁️  Alert" Style="{StaticResource ChoiceCardStyle}"
+                                    Command="{Binding SelectConsciousnessCommand}" CommandParameter="Alert"
+                                    BackgroundColor="{Binding SelectedConsciousness, Converter={StaticResource EqualToColorConverter}, ConverterParameter=Alert}" />
+                            <Button Grid.Column="1" Text="💭  Ny forvirring" Style="{StaticResource ChoiceCardStyle}"
+                                    Command="{Binding SelectConsciousnessCommand}" CommandParameter="NewConfusion"
+                                    BackgroundColor="{Binding SelectedConsciousness, Converter={StaticResource EqualToColorConverter}, ConverterParameter=NewConfusion}" />
+                            <Button Grid.Row="1" Text="🔊  Reagerer på stemme" Style="{StaticResource ChoiceCardStyle}"
+                                    Command="{Binding SelectConsciousnessCommand}" CommandParameter="Voice"
+                                    BackgroundColor="{Binding SelectedConsciousness, Converter={StaticResource EqualToColorConverter}, ConverterParameter=Voice}" />
+                            <Button Grid.Row="1" Grid.Column="1" Text="⚡  Reagerer på smerte" Style="{StaticResource ChoiceCardStyle}"
+                                    Command="{Binding SelectConsciousnessCommand}" CommandParameter="Pain"
+                                    BackgroundColor="{Binding SelectedConsciousness, Converter={StaticResource EqualToColorConverter}, ConverterParameter=Pain}" />
+                            <Button Grid.Row="2" Grid.ColumnSpan="2" Text="😶  Ikke-responsiv" Style="{StaticResource ChoiceCardStyle}"
+                                    Command="{Binding SelectConsciousnessCommand}" CommandParameter="Unresponsive"
+                                    BackgroundColor="{Binding SelectedConsciousness, Converter={StaticResource EqualToColorConverter}, ConverterParameter=Unresponsive}" />
+                        </Grid>
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Temperatur -->
+                <Border x:Name="SecTemp" Style="{StaticResource CardStyle}">
+                    <VerticalStackLayout Spacing="8">
+                        <Grid ColumnDefinitions="*,Auto,Auto,Auto,Auto">
+                            <HorizontalStackLayout Spacing="6">
+                                <Label Text="Temperatur" Style="{StaticResource FieldLabelStyle}" />
+                                <Label Text="°C" Style="{StaticResource FieldUnitStyle}" VerticalOptions="Center" />
+                            </HorizontalStackLayout>
+                            <Label Grid.Column="1" Text="3" Style="{StaticResource ScoreChipStyle}"
+                                   BackgroundColor="{Binding TempScore, Converter={StaticResource ScoreChipColorConverter}, ConverterParameter=3}" />
+                            <Label Grid.Column="2" Text="2" Style="{StaticResource ScoreChipStyle}"
+                                   BackgroundColor="{Binding TempScore, Converter={StaticResource ScoreChipColorConverter}, ConverterParameter=2}" />
+                            <Label Grid.Column="3" Text="1" Style="{StaticResource ScoreChipStyle}"
+                                   BackgroundColor="{Binding TempScore, Converter={StaticResource ScoreChipColorConverter}, ConverterParameter=1}" />
+                            <Label Grid.Column="4" Text="0" Style="{StaticResource ScoreChipStyle}"
+                                   BackgroundColor="{Binding TempScore, Converter={StaticResource ScoreChipColorConverter}, ConverterParameter=0}" />
+                        </Grid>
+                        <Border Style="{StaticResource InputBorderStyle}">
+                            <Grid ColumnDefinitions="*,Auto">
+                                <Entry x:Name="EntryTemp" Style="{StaticResource VitalEntryStyle}" Placeholder="f.eks. 37.2"
+                                       Text="{Binding TemperatureText}" Keyboard="Numeric" MaxLength="4"
+                                       controls:KeyboardNav.HasPrevious="True"
+                                       controls:KeyboardNav.PreviousCommand="{Binding FocusPulseCommand}" />
+                                <Label Grid.Column="1" Text="Normalt: 36.1–38.0" Style="{StaticResource HintStyle}" VerticalOptions="End" Margin="0,0,0,6" />
+                            </Grid>
+                        </Border>
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Score summary -->
+                <Border Style="{StaticResource CardStyle}"
+                        BackgroundColor="{Binding Result.RiskLevel, Converter={StaticResource RiskLevelToBackgroundConverter}}">
+                    <VerticalStackLayout Spacing="10">
+                        <Label Text="{Binding Result.RiskTitle}" FontAttributes="Bold" FontSize="15"
+                               IsVisible="{Binding CanSubmit}"
+                               TextColor="{Binding Result.RiskLevel, Converter={StaticResource RiskLevelToColorConverter}}" />
+
+                        <Grid ColumnDefinitions="*,Auto">
+                            <Label Text="Samlet NEWS-score" Style="{StaticResource FieldLabelStyle}" VerticalOptions="Center" />
+                            <Border Grid.Column="1" Padding="14,6"
+                                    BackgroundColor="{Binding Result.RiskLevel, Converter={StaticResource RiskLevelToColorConverter}}"
+                                    IsVisible="{Binding CanSubmit}">
+                                <Border.StrokeShape>
+                                    <RoundRectangle CornerRadius="14" />
+                                </Border.StrokeShape>
+                                <Label Text="{Binding Result.TotalScore}" FontSize="22" FontAttributes="Bold" TextColor="Black" />
+                            </Border>
+                        </Grid>
+
+                        <Label Text="{Binding Result.ClinicalResponse}" Style="{StaticResource HintStyle}"
+                               IsVisible="{Binding CanSubmit}" FontAttributes="Bold" />
+                        <Label Text="Fyll inn alle felt for å beregne score" Style="{StaticResource HintStyle}"
+                               IsVisible="{Binding CanSubmit, Converter={StaticResource EqualToBoolConverter}, ConverterParameter=False}" />
+
+                        <FlexLayout Wrap="Wrap" Direction="Row" JustifyContent="Start" AlignItems="Start"
+                                    IsVisible="{Binding CanSubmit}"
+                                    BindableLayout.ItemsSource="{Binding Result.Parameters}">
+                            <BindableLayout.ItemTemplate>
+                                <DataTemplate x:DataType="models:ParameterScore">
+                                    <Border Margin="0,0,8,8" Padding="10,8"
+                                            BackgroundColor="{AppThemeBinding Light={StaticResource ChipInactiveBackgroundLight}, Dark={StaticResource ChipInactiveBackgroundDark}}">
+                                        <Border.StrokeShape>
+                                            <RoundRectangle CornerRadius="12" />
+                                        </Border.StrokeShape>
+                                        <VerticalStackLayout Spacing="4" HorizontalOptions="Center">
+                                            <Label Text="{Binding ShortLabel}" FontSize="11" HorizontalTextAlignment="Center"
+                                                   TextColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}" />
+                                            <Label Text="{Binding DisplayValue}" FontSize="16" FontAttributes="Bold" HorizontalTextAlignment="Center"
+                                                   TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}" />
+                                            <Border Padding="6,2" HorizontalOptions="Center"
+                                                    BackgroundColor="{Binding Score, Converter={StaticResource ScoreToColorConverter}}">
+                                                <Border.StrokeShape>
+                                                    <RoundRectangle CornerRadius="6" />
+                                                </Border.StrokeShape>
+                                                <Label Text="{Binding Score}" FontSize="12" FontAttributes="Bold" TextColor="Black" />
+                                            </Border>
+                                        </VerticalStackLayout>
+                                    </Border>
+                                </DataTemplate>
+                            </BindableLayout.ItemTemplate>
+                        </FlexLayout>
+                    </VerticalStackLayout>
+                </Border>
+
+                <!-- Confirmation panel after submit -->
+                <Border Style="{StaticResource CardStyle}" IsVisible="{Binding IsSubmitted}">
+                    <VerticalStackLayout Spacing="10">
+                        <HorizontalStackLayout Spacing="8">
+                            <Label Text="✓" TextColor="{StaticResource RiskLowColor}" FontAttributes="Bold" FontSize="18" />
+                            <Label Text="Lagret i journal" FontAttributes="Bold" FontSize="16"
+                                   TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}" />
+                        </HorizontalStackLayout>
+                        <Label Text="{Binding SubmittedTimestamp}" Style="{StaticResource HintStyle}" />
+                        <Grid ColumnDefinitions="*,*" ColumnSpacing="10">
+                            <VerticalStackLayout>
+                                <Label Text="Utfyllingstid" Style="{StaticResource HintStyle}" />
+                                <Label Text="{Binding ElapsedDisplay}" FontSize="20" FontAttributes="Bold" />
+                            </VerticalStackLayout>
+                            <VerticalStackLayout Grid.Column="1">
+                                <Label Text="NEWS score" Style="{StaticResource HintStyle}" />
+                                <Label Text="{Binding Result.TotalScore}" FontSize="20" FontAttributes="Bold"
+                                       TextColor="{Binding Result.RiskLevel, Converter={StaticResource RiskLevelToColorConverter}}" />
+                            </VerticalStackLayout>
+                        </Grid>
+                        <Button Text="Ny registrering" Style="{StaticResource ChoiceCardStyle}" Command="{Binding NewRegistrationCommand}" />
+                    </VerticalStackLayout>
+                </Border>
+
+                <BoxView HeightRequest="8" Color="Transparent" />
+            </VerticalStackLayout>
+        </ScrollView>
+
+        <!-- Sticky footer -->
+        <Border Grid.Row="1" Padding="16,10" StrokeThickness="0"
+                BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundLight}, Dark={StaticResource BackgroundDark}}"
+                IsVisible="{Binding IsSubmitted, Converter={StaticResource EqualToBoolConverter}, ConverterParameter=False}">
+            <VerticalStackLayout Spacing="6">
+                <HorizontalStackLayout Spacing="6" HorizontalOptions="Center" IsVisible="{Binding IsTimerRunning}">
+                    <BoxView Color="{StaticResource Accent}" WidthRequest="8" HeightRequest="8" CornerRadius="4" VerticalOptions="Center" />
+                    <Label Text="{Binding ElapsedDisplay}" Style="{StaticResource HintStyle}" />
+                </HorizontalStackLayout>
+                <Button Style="{StaticResource PrimaryButtonStyle}"
+                        Command="{Binding SubmitCommand}"
+                        IsEnabled="{Binding CanSubmit}"
+                        Text="{Binding SubmitButtonText}" />
+            </VerticalStackLayout>
+        </Border>
+
+    </Grid>
+</ContentPage>

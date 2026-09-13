@@ -1,0 +1,52 @@
+{
+  "id": "qsofa",
+  "title": "qSOFA",
+  "subtitle": "Quick Sequential Organ Failure Assessment",
+  "icon": "🩺",
+  "sections": [
+    {
+      "id": "resp",
+      "label": "Respirasjonsfrekvens",
+      "unit": "pust/min",
+      "hint": "Forhøyet ved ≥22",
+      "kind": "Numeric",
+      "min": 4,
+      "max": 60,
+      "isDecimal": false,
+      "scoreBands": [
+        { "maxValue": 21, "score": 0 },
+        { "minValue": 22, "score": 1 }
+      ]
+    },
+    {
+      "id": "sbp",
+      "label": "Systolisk blodtrykk",
+      "unit": "mmHg",
+      "hint": "Lavt ved ≤100",
+      "kind": "Numeric",
+      "min": 40,
+      "max": 300,
+      "isDecimal": false,
+      "scoreBands": [
+        { "maxValue": 100, "score": 1 },
+        { "minValue": 101, "score": 0 }
+      ]
+    },
+    {
+      "id": "mentation",
+      "label": "Mental status",
+      "kind": "SingleChoice",
+      "options": [
+        { "value": "normal", "label": "Normal", "score": 0 },
+        { "value": "altered", "label": "Endret bevissthet (GCS < 15)", "score": 1 }
+      ]
+    }
+  ],
+  "scoring": {
+    "riskBands": [
+      { "id": "low", "label": "LAV RISIKO", "minTotal": 0, "maxTotal": 1, "color": "#22C55E" },
+      { "id": "high", "label": "HØY RISIKO", "minTotal": 2, "color": "#EF4444" }
+    ],
+    "escalateOnAnyMaxScore": false
+  }
+}

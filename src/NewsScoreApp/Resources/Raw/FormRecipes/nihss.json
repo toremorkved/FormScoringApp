@@ -1,0 +1,188 @@
+{
+  "id": "nihss",
+  "title": "NIHSS",
+  "subtitle": "National Institutes of Health Stroke Scale",
+  "icon": "⚡",
+  "sections": [
+    {
+      "id": "loc",
+      "label": "1a. Bevissthetsnivå",
+      "kind": "SingleChoice",
+      "options": [
+        { "value": "alert", "label": "Våken, adekvat reagerende", "score": 0 },
+        { "value": "minorStimulation", "label": "Ikke helt våken, men vekkbar ved lett stimulering", "score": 1 },
+        { "value": "repeatedStimulation", "label": "Ikke våken, krever gjentatt eller kraftig stimulering for å reagere", "score": 2 },
+        { "value": "comatose", "label": "Reagerer kun med reflekser, eller reagerer ikke i det hele tatt (koma)", "score": 3 }
+      ]
+    },
+    {
+      "id": "locQuestions",
+      "label": "1b. Bevissthetsnivå - spørsmål",
+      "hint": "Spør om måned og egen alder",
+      "kind": "SingleChoice",
+      "options": [
+        { "value": "both", "label": "Svarer riktig på begge spørsmål", "score": 0 },
+        { "value": "one", "label": "Svarer riktig på ett spørsmål", "score": 1 },
+        { "value": "none", "label": "Svarer ikke riktig på noen av spørsmålene", "score": 2 }
+      ]
+    },
+    {
+      "id": "locCommands",
+      "label": "1c. Bevissthetsnivå - kommandoer",
+      "hint": "Be pasienten åpne/lukke øynene og knytte/åpne hånden",
+      "kind": "SingleChoice",
+      "options": [
+        { "value": "both", "label": "Utfører begge kommandoer riktig", "score": 0 },
+        { "value": "one", "label": "Utfører én kommando riktig", "score": 1 },
+        { "value": "none", "label": "Utfører ingen kommandoer riktig", "score": 2 }
+      ]
+    },
+    {
+      "id": "gaze",
+      "label": "2. Blikkdeviasjon",
+      "kind": "SingleChoice",
+      "options": [
+        { "value": "normal", "label": "Normale øyebevegelser", "score": 0 },
+        { "value": "partial", "label": "Delvis blikkparese, kan overstyres viljemessig eller reflektorisk", "score": 1 },
+        { "value": "forced", "label": "Total blikkdeviasjon som ikke lar seg overstyre", "score": 2 }
+      ]
+    },
+    {
+      "id": "visualFields",
+      "label": "3. Synsfelt",
+      "kind": "SingleChoice",
+      "options": [
+        { "value": "none", "label": "Ingen synsfeltutfall", "score": 0 },
+        { "value": "partial", "label": "Delvis hemianopsi", "score": 1 },
+        { "value": "complete", "label": "Total hemianopsi", "score": 2 },
+        { "value": "bilateral", "label": "Bilateral hemianopsi (inkludert kortikal blindhet)", "score": 3 }
+      ]
+    },
+    {
+      "id": "facialPalsy",
+      "label": "4. Facialisparese",
+      "kind": "SingleChoice",
+      "options": [
+        { "value": "normal", "label": "Normal, symmetrisk bevegelse", "score": 0 },
+        { "value": "minor", "label": "Lett parese (flatere nasolabialfold, asymmetrisk smil)", "score": 1 },
+        { "value": "partial", "label": "Delvis parese (nesten fullstendig lammelse i nedre ansikt)", "score": 2 },
+        { "value": "complete", "label": "Fullstendig parese en- eller bilateralt i øvre og nedre ansikt", "score": 3 }
+      ]
+    },
+    {
+      "id": "motorArmLeft",
+      "label": "5a. Motorikk arm, venstre",
+      "hint": "Hold armen strukket 90°/45° i 10 sekunder",
+      "kind": "SingleChoice",
+      "options": [
+        { "value": "noDrift", "label": "Ingen drift, holder posisjon i 10 sekunder", "score": 0 },
+        { "value": "drift", "label": "Drift, men når ikke ned til underlaget", "score": 1 },
+        { "value": "someEffort", "label": "Noe kraft mot tyngdekraften, synker til underlaget", "score": 2 },
+        { "value": "noEffort", "label": "Ingen kraft mot tyngdekraften, armen faller", "score": 3 },
+        { "value": "noMovement", "label": "Ingen bevegelse", "score": 4 }
+      ]
+    },
+    {
+      "id": "motorArmRight",
+      "label": "5b. Motorikk arm, høyre",
+      "hint": "Hold armen strukket 90°/45° i 10 sekunder",
+      "kind": "SingleChoice",
+      "options": [
+        { "value": "noDrift", "label": "Ingen drift, holder posisjon i 10 sekunder", "score": 0 },
+        { "value": "drift", "label": "Drift, men når ikke ned til underlaget", "score": 1 },
+        { "value": "someEffort", "label": "Noe kraft mot tyngdekraften, synker til underlaget", "score": 2 },
+        { "value": "noEffort", "label": "Ingen kraft mot tyngdekraften, armen faller", "score": 3 },
+        { "value": "noMovement", "label": "Ingen bevegelse", "score": 4 }
+      ]
+    },
+    {
+      "id": "motorLegLeft",
+      "label": "6a. Motorikk ben, venstre",
+      "hint": "Hold benet strukket 30° i 5 sekunder",
+      "kind": "SingleChoice",
+      "options": [
+        { "value": "noDrift", "label": "Ingen drift, holder posisjon i 5 sekunder", "score": 0 },
+        { "value": "drift", "label": "Drift, men når ikke ned til underlaget", "score": 1 },
+        { "value": "someEffort", "label": "Noe kraft mot tyngdekraften, synker til underlaget", "score": 2 },
+        { "value": "noEffort", "label": "Ingen kraft mot tyngdekraften, benet faller", "score": 3 },
+        { "value": "noMovement", "label": "Ingen bevegelse", "score": 4 }
+      ]
+    },
+    {
+      "id": "motorLegRight",
+      "label": "6b. Motorikk ben, høyre",
+      "hint": "Hold benet strukket 30° i 5 sekunder",
+      "kind": "SingleChoice",
+      "options": [
+        { "value": "noDrift", "label": "Ingen drift, holder posisjon i 5 sekunder", "score": 0 },
+        { "value": "drift", "label": "Drift, men når ikke ned til underlaget", "score": 1 },
+        { "value": "someEffort", "label": "Noe kraft mot tyngdekraften, synker til underlaget", "score": 2 },
+        { "value": "noEffort", "label": "Ingen kraft mot tyngdekraften, benet faller", "score": 3 },
+        { "value": "noMovement", "label": "Ingen bevegelse", "score": 4 }
+      ]
+    },
+    {
+      "id": "limbAtaxia",
+      "label": "7. Ataksi",
+      "hint": "Finger-nese og hæl-kne-forsøk",
+      "kind": "SingleChoice",
+      "options": [
+        { "value": "absent", "label": "Fraværende", "score": 0 },
+        { "value": "oneLimb", "label": "Til stede i én ekstremitet", "score": 1 },
+        { "value": "twoLimbs", "label": "Til stede i to ekstremiteter", "score": 2 }
+      ]
+    },
+    {
+      "id": "sensory",
+      "label": "8. Sensibilitet",
+      "kind": "SingleChoice",
+      "options": [
+        { "value": "normal", "label": "Normal, ingen sensibilitetstap", "score": 0 },
+        { "value": "mild", "label": "Lett til moderat sensibilitetstap", "score": 1 },
+        { "value": "severe", "label": "Alvorlig til totalt sensibilitetstap", "score": 2 }
+      ]
+    },
+    {
+      "id": "language",
+      "label": "9. Beste språkfunksjon",
+      "hint": "Be pasienten beskrive et bilde, benevne gjenstander og lese setninger",
+      "kind": "SingleChoice",
+      "options": [
+        { "value": "none", "label": "Ingen afasi", "score": 0 },
+        { "value": "mild", "label": "Lett til moderat afasi", "score": 1 },
+        { "value": "severe", "label": "Alvorlig afasi (fragmentert kommunikasjon)", "score": 2 },
+        { "value": "mute", "label": "Mutisme eller global afasi, ingen forståelig tale", "score": 3 }
+      ]
+    },
+    {
+      "id": "dysarthria",
+      "label": "10. Dysartri",
+      "kind": "SingleChoice",
+      "options": [
+        { "value": "normal", "label": "Normal artikulasjon", "score": 0 },
+        { "value": "mild", "label": "Lett til moderat dysartri, ord er forstålige med noe anstrengelse", "score": 1 },
+        { "value": "severe", "label": "Alvorlig dysartri, uforståelig eller anartrisk tale", "score": 2 }
+      ]
+    },
+    {
+      "id": "extinction",
+      "label": "11. Ekstinksjon/neglekt",
+      "kind": "SingleChoice",
+      "options": [
+        { "value": "none", "label": "Ingen abnormalitet", "score": 0 },
+        { "value": "oneModality", "label": "Neglekt eller ekstinksjon i én sansemodalitet", "score": 1 },
+        { "value": "severe", "label": "Alvorlig hemi-inattention eller ekstinksjon i mer enn én modalitet", "score": 2 }
+      ]
+    }
+  ],
+  "scoring": {
+    "riskBands": [
+      { "id": "none", "label": "INGEN SLAGSYMPTOMER", "minTotal": 0, "maxTotal": 0, "color": "#22C55E" },
+      { "id": "minor", "label": "MILDT SLAG", "minTotal": 1, "maxTotal": 4, "color": "#84CC16" },
+      { "id": "moderate", "label": "MODERAT SLAG", "minTotal": 5, "maxTotal": 15, "color": "#F97316" },
+      { "id": "moderateSevere", "label": "MODERAT TIL ALVORLIG SLAG", "minTotal": 16, "maxTotal": 20, "color": "#F97316" },
+      { "id": "severe", "label": "ALVORLIG SLAG", "minTotal": 21, "color": "#EF4444" }
+    ],
+    "escalateOnAnyMaxScore": false
+  }
+}

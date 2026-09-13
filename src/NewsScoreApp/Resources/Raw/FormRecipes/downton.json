@@ -1,0 +1,64 @@
+{
+  "id": "downton",
+  "title": "Fallrisiko",
+  "subtitle": "Downton Fall Risk Index",
+  "icon": "🚶",
+  "sections": [
+    {
+      "id": "previousFalls",
+      "label": "Tidligere fall",
+      "hint": "Har pasienten falt tidligere (uansett årsak)?",
+      "kind": "SingleChoice",
+      "options": [
+        { "value": "no", "label": "Nei", "score": 0 },
+        { "value": "yes", "label": "Ja", "score": 1 }
+      ]
+    },
+    {
+      "id": "medications",
+      "label": "Medikamenter",
+      "hint": "Bruker sedativa, diuretika, antihypertensiva, antiparkinson- eller antidepressiva?",
+      "kind": "SingleChoice",
+      "options": [
+        { "value": "none", "label": "Ingen av disse", "score": 0 },
+        { "value": "any", "label": "Bruker ett eller flere", "score": 1 }
+      ]
+    },
+    {
+      "id": "sensoryDeficit",
+      "label": "Sensorisk svekkelse",
+      "hint": "Synssvekkelse, hørselssvekkelse eller lammelser/parese?",
+      "kind": "SingleChoice",
+      "options": [
+        { "value": "none", "label": "Ingen svekkelse", "score": 0 },
+        { "value": "any", "label": "Én eller flere svekkelser", "score": 1 }
+      ]
+    },
+    {
+      "id": "mentalState",
+      "label": "Mental tilstand",
+      "kind": "SingleChoice",
+      "options": [
+        { "value": "orientated", "label": "Orientert", "score": 0 },
+        { "value": "confused", "label": "Forvirret / desorientert", "score": 1 }
+      ]
+    },
+    {
+      "id": "gait",
+      "label": "Gange/mobilitet",
+      "kind": "SingleChoice",
+      "options": [
+        { "value": "normal", "label": "Normal (inkl. sengeliggende/immobil)", "score": 0 },
+        { "value": "safe_with_aid", "label": "Sikker med ganghjelpemiddel", "score": 1 },
+        { "value": "unsteady", "label": "Ustøtt/usikker gange", "score": 1 }
+      ]
+    }
+  ],
+  "scoring": {
+    "riskBands": [
+      { "id": "low", "label": "LAV FALLRISIKO", "minTotal": 0, "maxTotal": 1, "color": "#22C55E" },
+      { "id": "high", "label": "HØY FALLRISIKO - IVERKSETT TILTAK", "minTotal": 2, "color": "#EF4444" }
+    ],
+    "escalateOnAnyMaxScore": false
+  }
+}

@@ -1,0 +1,52 @@
+{
+  "id": "gcs",
+  "title": "Glasgow Coma Scale",
+  "subtitle": "Bevissthetsnivå (GCS)",
+  "icon": "🧠",
+  "sections": [
+    {
+      "id": "eye",
+      "label": "Øyerespons (E)",
+      "kind": "SingleChoice",
+      "options": [
+        { "value": "spontaneous", "label": "Åpner spontant", "score": 4 },
+        { "value": "voice", "label": "Åpner ved tiltale", "score": 3 },
+        { "value": "pain", "label": "Åpner ved smerte", "score": 2 },
+        { "value": "none", "label": "Ingen respons", "score": 1 }
+      ]
+    },
+    {
+      "id": "verbal",
+      "label": "Verbal respons (V)",
+      "kind": "SingleChoice",
+      "options": [
+        { "value": "oriented", "label": "Orientert", "score": 5 },
+        { "value": "confused", "label": "Forvirret tale", "score": 4 },
+        { "value": "inappropriate", "label": "Upassende ord", "score": 3 },
+        { "value": "incomprehensible", "label": "Uforståelige lyder", "score": 2 },
+        { "value": "none", "label": "Ingen respons", "score": 1 }
+      ]
+    },
+    {
+      "id": "motor",
+      "label": "Motorisk respons (M)",
+      "kind": "SingleChoice",
+      "options": [
+        { "value": "obeys", "label": "Følger oppfordring", "score": 6 },
+        { "value": "localizes", "label": "Lokaliserer smerte", "score": 5 },
+        { "value": "withdraws", "label": "Trekker unna for smerte", "score": 4 },
+        { "value": "flexion", "label": "Abnorm fleksjon", "score": 3 },
+        { "value": "extension", "label": "Abnorm ekstensjon", "score": 2 },
+        { "value": "none", "label": "Ingen respons", "score": 1 }
+      ]
+    }
+  ],
+  "scoring": {
+    "riskBands": [
+      { "id": "severe", "label": "ALVORLIG (koma) - GCS 3-8", "minTotal": 3, "maxTotal": 8, "color": "#EF4444" },
+      { "id": "moderate", "label": "MODERAT - GCS 9-12", "minTotal": 9, "maxTotal": 12, "color": "#F97316" },
+      { "id": "mild", "label": "LETT/NORMAL - GCS 13-15", "minTotal": 13, "color": "#22C55E" }
+    ],
+    "escalateOnAnyMaxScore": false
+  }
+}

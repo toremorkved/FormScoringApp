@@ -1,0 +1,77 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<ContentPage xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+             xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+             xmlns:vm="clr-namespace:NewsScoreApp.ViewModels"
+             x:Class="NewsScoreApp.Views.SettingsPage"
+             x:DataType="vm:GenericFormViewModel"
+             Title="Innstillinger"
+             BackgroundColor="{AppThemeBinding Light={StaticResource BackgroundLight}, Dark={StaticResource BackgroundDark}}">
+
+    <ContentPage.ToolbarItems>
+        <ToolbarItem Text="Ferdig" Clicked="OnDoneClicked" />
+    </ContentPage.ToolbarItems>
+
+    <ScrollView>
+        <VerticalStackLayout Padding="16" Spacing="24">
+
+            <!-- "Skjema" group - mirrors an iOS Settings grouped section: header label above,
+                 rounded card containing one row per setting, thin separators between rows. -->
+            <VerticalStackLayout Spacing="8">
+                <Label Text="SKJEMA" FontSize="13" FontAttributes="Bold"
+                       TextColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}"
+                       Margin="8,0,0,0" />
+                <Border Style="{StaticResource CardStyle}" Padding="0">
+                    <VerticalStackLayout>
+                        <Grid ColumnDefinitions="*,Auto" Padding="16,14" ColumnSpacing="10">
+                            <Label Text="Velg skjema" VerticalOptions="Center"
+                                   TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}" />
+                            <Picker Grid.Column="1" ItemsSource="{Binding AvailableRecipes}"
+                                    SelectedItem="{Binding CurrentRecipe}"
+                                    ItemDisplayBinding="{Binding Title}"
+                                    HorizontalOptions="End" FontAttributes="Bold"
+                                    TextColor="{StaticResource Accent}" />
+                        </Grid>
+                    </VerticalStackLayout>
+                </Border>
+            </VerticalStackLayout>
+
+            <!-- "Utfylling" group -->
+            <VerticalStackLayout Spacing="8">
+                <Label Text="UTFYLLING" FontSize="13" FontAttributes="Bold"
+                       TextColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}"
+                       Margin="8,0,0,0" />
+                <Border Style="{StaticResource CardStyle}" Padding="0">
+                    <VerticalStackLayout>
+                        <Grid ColumnDefinitions="*,Auto" Padding="16,14" ColumnSpacing="10">
+                            <VerticalStackLayout Spacing="2">
+                                <Label Text="Automatisk hopp til neste felt"
+                                       TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}" />
+                                <Label Text="Hopper videre når et felt er gyldig utfylt" Style="{StaticResource HintStyle}" />
+                            </VerticalStackLayout>
+                            <Switch Grid.Column="1" IsToggled="{Binding AutoAdvanceEnabled}" VerticalOptions="Center" />
+                        </Grid>
+
+                        <BoxView HeightRequest="1" Margin="16,0"
+                                 Color="{AppThemeBinding Light={StaticResource InputBorderLight}, Dark={StaticResource InputBorderDark}}" />
+
+                        <Grid ColumnDefinitions="*,Auto" Padding="16,14" ColumnSpacing="10">
+                            <Label Text="Utseende" VerticalOptions="Center"
+                                   TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}" />
+                            <HorizontalStackLayout Grid.Column="1" Spacing="8" VerticalOptions="Center">
+                                <Label Text="🌙" FontSize="16" VerticalOptions="Center"
+                                       IsVisible="{Binding IsLightMode, Converter={StaticResource EqualToBoolConverter}, ConverterParameter=False}" />
+                                <Label Text="☀️" FontSize="16" VerticalOptions="Center"
+                                       IsVisible="{Binding IsLightMode}" />
+                                <Switch IsToggled="{Binding IsLightMode}" />
+                            </HorizontalStackLayout>
+                        </Grid>
+                    </VerticalStackLayout>
+                </Border>
+                <Label Text="Lys/mørk modus følger denne bryteren uavhengig av systeminnstillingen på enheten."
+                       Style="{StaticResource HintStyle}" Margin="8,0,0,0" />
+            </VerticalStackLayout>
+
+        </VerticalStackLayout>
+    </ScrollView>
+
+</ContentPage>

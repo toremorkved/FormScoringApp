@@ -1,0 +1,27 @@
+﻿<Application xmlns="http://schemas.microsoft.com/dotnet/2021/maui"
+              xmlns:x="http://schemas.microsoft.com/winfx/2009/xaml"
+              xmlns:local="clr-namespace:NewsScoreApp"
+              xmlns:conv="clr-namespace:NewsScoreApp.Converters"
+              x:Class="NewsScoreApp.App">
+    <Application.Resources>
+        <ResourceDictionary>
+            <ResourceDictionary.MergedDictionaries>
+                <ResourceDictionary Source="Resources/Styles/Colors.xaml" />
+                <ResourceDictionary Source="Resources/Styles/Styles.xaml" />
+            </ResourceDictionary.MergedDictionaries>
+
+            <conv:ScoreChipColorConverter x:Key="ScoreChipColorConverter" />
+            <conv:ScoreToColorConverter x:Key="ScoreToColorConverter" />
+            <conv:RiskLevelToColorConverter x:Key="RiskLevelToColorConverter" />
+            <conv:RiskLevelToBackgroundConverter x:Key="RiskLevelToBackgroundConverter" />
+            <conv:EqualToColorConverter x:Key="EqualToColorConverter" />
+            <conv:EqualToBoolConverter x:Key="EqualToBoolConverter" />
+            <conv:IntGreaterThanZeroConverter x:Key="IntGreaterThanZeroConverter" />
+            <conv:ActiveChipToColorConverter x:Key="ActiveChipToColorConverter" />
+            <conv:SelectedToColorConverter x:Key="SelectedToColorConverter" />
+            <conv:HexColorConverter x:Key="HexColorConverter" />
+            <conv:InvalidToStrokeColorConverter x:Key="InvalidToStrokeColorConverter" />
+            <conv:InvalidToThicknessConverter x:Key="InvalidToThicknessConverter" />
+        </ResourceDictionary>
+    </Application.Resources>
+</Application>

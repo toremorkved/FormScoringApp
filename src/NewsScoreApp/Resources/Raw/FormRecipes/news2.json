@@ -1,0 +1,125 @@
+{
+  "id": "news2",
+  "title": "NEWS Score",
+  "subtitle": "National Early Warning Score",
+  "icon": "🫀",
+  "sections": [
+    {
+      "id": "resp",
+      "label": "Respirasjonsfrekvens",
+      "unit": "pust/min",
+      "hint": "Normalt: 12–20",
+      "kind": "Numeric",
+      "min": 4,
+      "max": 60,
+      "isDecimal": false,
+      "scoreBands": [
+        { "maxValue": 8, "score": 3 },
+        { "minValue": 9, "maxValue": 11, "score": 1 },
+        { "minValue": 12, "maxValue": 20, "score": 0 },
+        { "minValue": 21, "maxValue": 24, "score": 2 },
+        { "minValue": 25, "score": 3 }
+      ]
+    },
+    {
+      "id": "spo2",
+      "label": "Oksygenmetning",
+      "unit": "SpO₂ %",
+      "hint": "Normalt: ≥96%",
+      "kind": "Numeric",
+      "min": 50,
+      "max": 100,
+      "isDecimal": false,
+      "scoreBands": [
+        { "maxValue": 91, "score": 3 },
+        { "minValue": 92, "maxValue": 93, "score": 2 },
+        { "minValue": 94, "maxValue": 95, "score": 1 },
+        { "minValue": 96, "score": 0 }
+      ]
+    },
+    {
+      "id": "o2",
+      "label": "Oksygentilskudd",
+      "kind": "SingleChoice",
+      "options": [
+        { "value": "air", "label": "Romluft", "icon": "🌬️", "score": 0 },
+        { "value": "oxygen", "label": "Oksygen", "icon": "🫁", "score": 2 }
+      ]
+    },
+    {
+      "id": "sbp",
+      "label": "Systolisk blodtrykk",
+      "unit": "mmHg",
+      "hint": "Normalt: 111–219",
+      "kind": "Numeric",
+      "min": 40,
+      "max": 300,
+      "isDecimal": false,
+      "scoreBands": [
+        { "maxValue": 90, "score": 3 },
+        { "minValue": 91, "maxValue": 100, "score": 2 },
+        { "minValue": 101, "maxValue": 110, "score": 1 },
+        { "minValue": 111, "maxValue": 219, "score": 0 },
+        { "minValue": 220, "score": 3 }
+      ]
+    },
+    {
+      "id": "pulse",
+      "label": "Puls",
+      "unit": "slag/min",
+      "hint": "Normalt: 51–90",
+      "kind": "Numeric",
+      "min": 20,
+      "max": 250,
+      "isDecimal": false,
+      "scoreBands": [
+        { "maxValue": 40, "score": 3 },
+        { "minValue": 41, "maxValue": 50, "score": 1 },
+        { "minValue": 51, "maxValue": 90, "score": 0 },
+        { "minValue": 91, "maxValue": 110, "score": 1 },
+        { "minValue": 111, "maxValue": 130, "score": 2 },
+        { "minValue": 131, "score": 3 }
+      ]
+    },
+    {
+      "id": "acvpu",
+      "label": "Bevissthetsnivå (ACVPU)",
+      "kind": "SingleChoice",
+      "options": [
+        { "value": "alert", "label": "Alert", "score": 0 },
+        { "value": "confusion", "label": "Confusion (nyoppstått)", "score": 3 },
+        { "value": "voice", "label": "Voice", "score": 3 },
+        { "value": "pain", "label": "Pain", "score": 3 },
+        { "value": "unresponsive", "label": "Unresponsive", "score": 3 }
+      ]
+    },
+    {
+      "id": "temp",
+      "label": "Kroppstemperatur",
+      "unit": "°C",
+      "hint": "Normalt: 36,1–38,0",
+      "kind": "Numeric",
+      "min": 25,
+      "max": 43,
+      "isDecimal": true,
+      "scoreBands": [
+        { "maxValue": 35.0, "score": 3 },
+        { "minValue": 35.1, "maxValue": 36.0, "score": 1 },
+        { "minValue": 36.1, "maxValue": 38.0, "score": 0 },
+        { "minValue": 38.1, "maxValue": 39.0, "score": 1 },
+        { "minValue": 39.1, "score": 2 }
+      ]
+    }
+  ],
+  "scoring": {
+    "riskBands": [
+      { "id": "low", "label": "LAV RISIKO", "minTotal": 0, "maxTotal": 4, "color": "#22C55E" },
+      { "id": "lowMedium", "label": "LAV-MEDIUM RISIKO", "minTotal": 0, "maxTotal": 4, "color": "#EAB308" },
+      { "id": "medium", "label": "MEDIUM RISIKO", "minTotal": 5, "maxTotal": 6, "color": "#F97316" },
+      { "id": "high", "label": "HØY RISIKO", "minTotal": 7, "color": "#EF4444" }
+    ],
+    "escalateOnAnyMaxScore": true,
+    "maxScoreValue": 3,
+    "escalatedBandId": "lowMedium"
+  }
+}
