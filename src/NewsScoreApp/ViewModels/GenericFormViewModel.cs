@@ -152,9 +152,9 @@ public sealed partial class GenericFormViewModel : ObservableObject
 
         if (isChoice)
         {
-            // Choice cards advance immediately (mirrors the prototype behaviour) instead of
-            // debouncing, since there is no ongoing typing to wait out.
-            if (valid) AdvanceFrom(field);
+            // Choice cards advance immediately when auto-advance is enabled; unlike text entry,
+            // there is no ongoing typing to debounce.
+            if (AutoAdvanceEnabled && valid) AdvanceFrom(field);
             return;
         }
 

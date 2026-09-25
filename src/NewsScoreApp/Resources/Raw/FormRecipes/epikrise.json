@@ -9,6 +9,7 @@
       "id": "reason",
       "label": "Innleggelsesårsak",
       "hint": "Hvorfor ble pasienten innlagt?",
+      "info": "Oppsummer hovedårsaken til innleggelsen, relevante symptomer og problemstillingen som skulle avklares eller behandles.",
       "placeholder": "Beskriv hovedproblemstilling og bakgrunn for innleggelsen...",
       "kind": "Text"
     },
@@ -16,6 +17,7 @@
       "id": "history",
       "label": "Sykehistorie",
       "hint": "Anamnese og relevant tidligere sykehistorie",
+      "info": "Ta med relevant aktuell anamnese, tidligere sykdommer, funksjonsnivå, allergier og faste legemidler.",
       "placeholder": "Beskriv aktuell anamnese, tidligere sykdommer og faste medikamenter...",
       "kind": "Text"
     },
@@ -23,6 +25,7 @@
       "id": "findings",
       "label": "Kliniske funn og undersøkelser",
       "hint": "Objektive funn, blodprøver, bildediagnostikk m.m.",
+      "info": "Oppsummer relevante objektive funn og resultater fra blodprøver, bildediagnostikk og andre undersøkelser. Ta med klinisk viktige avvik.",
       "placeholder": "Beskriv relevante kliniske funn og resultater av utførte undersøkelser...",
       "kind": "Text"
     },
@@ -30,6 +33,7 @@
       "id": "diagnosis",
       "label": "Diagnose(r)",
       "hint": "Hoveddiagnose og eventuelle bidiagnoser",
+      "info": "Angi hoveddiagnose og relevante bidiagnoser. Bruk ICD-10-kode når den er kjent og avklart.",
       "placeholder": "Angi hoveddiagnose og bidiagnoser, gjerne med ICD-10-kode...",
       "kind": "Text"
     },
@@ -37,6 +41,7 @@
       "id": "treatment",
       "label": "Behandling gitt under oppholdet",
       "hint": "Medisinsk og eventuell kirurgisk behandling",
+      "info": "Beskriv vesentlig medisinsk og kirurgisk behandling, prosedyrer, respons og eventuelle komplikasjoner.",
       "placeholder": "Beskriv behandling, prosedyrer og eventuelle komplikasjoner...",
       "kind": "Text"
     },
@@ -44,12 +49,14 @@
       "id": "course",
       "label": "Forløp under oppholdet",
       "hint": "Kort sammendrag av forløpet fra innleggelse til utskrivelse",
+      "info": "Gi en kort kronologisk oppsummering av utviklingen, viktige vurderinger, behandlingsendringer og respons.",
       "placeholder": "Beskriv utviklingen gjennom oppholdet...",
       "kind": "Text"
     },
     {
       "id": "dischargeStatus",
       "label": "Tilstand ved utskrivelse",
+      "info": "Velg pasientens samlede tilstand ved utskrivelse sammenlignet med innleggelsen.",
       "kind": "SingleChoice",
       "options": [
         { "value": "improved", "label": "Bedret", "score": 0 },
@@ -62,6 +69,7 @@
       "id": "medicationChanges",
       "label": "Endringer i legemiddelliste",
       "hint": "Nye, seponerte eller endrede medikamenter",
+      "info": "List opp nye, seponerte og dose- eller frekvensendrede legemidler. Ta med årsak når det er relevant.",
       "placeholder": "Beskriv endringer i legemiddelbehandlingen ved utskrivelse...",
       "kind": "Text"
     },
@@ -69,6 +77,7 @@
       "id": "followUp",
       "label": "Videre oppfølging og plan",
       "hint": "Kontroller, henvisninger og informasjon gitt til pasient/pårørende",
+      "info": "Beskriv avtalt oppfølging, kontroller, henvisninger, behandlingsplan, varselsymptomer og informasjon som er gitt.",
       "placeholder": "Beskriv videre plan, avtalt oppfølging og eventuelle henvisninger...",
       "kind": "Text"
     }

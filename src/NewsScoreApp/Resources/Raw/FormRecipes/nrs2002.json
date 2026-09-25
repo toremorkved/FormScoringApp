@@ -8,6 +8,7 @@
       "id": "impairment",
       "label": "Ernæringsmessig status",
       "hint": "Velg det alternativet som passer best",
+      "info": "Vurder nylig vekttap, BMI, redusert allmenntilstand og matinntak opp mot alternativene. Velg høyeste relevante grad.",
       "kind": "SingleChoice",
       "options": [
         { "value": "normal", "label": "Normal ernæringsstatus", "score": 0 },
@@ -20,6 +21,7 @@
       "id": "diseaseSeverity",
       "label": "Sykdommens alvorlighetsgrad",
       "hint": "Velg det alternativet som passer best",
+      "info": "Vurder hvor mye den aktuelle sykdommen øker ernæringsbehovet eller påvirker inntaket. Velg høyeste relevante alvorlighetsgrad.",
       "kind": "SingleChoice",
       "options": [
         { "value": "normal", "label": "Normale ernæringsbehov", "score": 0 },
@@ -32,6 +34,7 @@
       "id": "age",
       "label": "Alder ≥ 70 år",
       "hint": "Gir automatisk et ekstra poeng",
+      "info": "Velg ja når pasienten er 70 år eller eldre. Dette gir ett ekstra poeng i NRS 2002.",
       "kind": "SingleChoice",
       "options": [
         { "value": "no", "label": "Nei, under 70 år", "score": 0 },

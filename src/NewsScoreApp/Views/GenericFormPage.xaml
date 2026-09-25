@@ -15,10 +15,16 @@
         <DataTemplate x:Key="NumericFieldTemplate" x:DataType="vm:GenericFieldViewModel">
             <Border x:Name="FieldCard" Style="{StaticResource CardStyle}" Loaded="OnFieldCardLoaded">
                 <VerticalStackLayout Spacing="8">
-                    <HorizontalStackLayout Spacing="6">
-                        <Label Text="{Binding Label}" Style="{StaticResource FieldLabelStyle}" />
-                        <Label Text="{Binding Unit}" Style="{StaticResource FieldUnitStyle}" VerticalOptions="Center" />
-                    </HorizontalStackLayout>
+                    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="6">
+                        <HorizontalStackLayout Spacing="6">
+                            <Label Text="{Binding Label}" Style="{StaticResource FieldLabelStyle}" />
+                            <Label Text="{Binding Unit}" Style="{StaticResource FieldUnitStyle}" VerticalOptions="Center" />
+                        </HorizontalStackLayout>
+                        <Button Grid.Column="1" Text="ⓘ" FontSize="20" Padding="6,0"
+                                BackgroundColor="Transparent" TextColor="{StaticResource Accent}"
+                                IsVisible="{Binding HasInfo}" SemanticProperties.Description="Vis feltinformasjon"
+                                Command="{Binding ShowInfoCommand}" />
+                    </Grid>
                     <Border Style="{StaticResource InputBorderStyle}"
                             Stroke="{Binding IsInvalid, Converter={StaticResource InvalidToStrokeColorConverter}}"
                             StrokeThickness="{Binding IsInvalid, Converter={StaticResource InvalidToThicknessConverter}}">
@@ -54,13 +60,20 @@
                     Stroke="{Binding IsInvalid, Converter={StaticResource InvalidToStrokeColorConverter}}"
                     StrokeThickness="{Binding IsInvalid, Converter={StaticResource InvalidToThicknessConverter}}">
                 <VerticalStackLayout Spacing="10">
-                    <Label Text="{Binding Label}" Style="{StaticResource FieldLabelStyle}" />
+                    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="6">
+                        <Label Text="{Binding Label}" Style="{StaticResource FieldLabelStyle}" />
+                        <Button Grid.Column="1" Text="ⓘ" FontSize="20" Padding="6,0"
+                                BackgroundColor="Transparent" TextColor="{StaticResource Accent}"
+                                IsVisible="{Binding HasInfo}" SemanticProperties.Description="Vis feltinformasjon"
+                                Command="{Binding ShowInfoCommand}" />
+                    </Grid>
                     <VerticalStackLayout Spacing="8" BindableLayout.ItemsSource="{Binding Options}">
                         <BindableLayout.ItemTemplate>
                             <DataTemplate x:DataType="vm:OptionItemViewModel">
                                 <Button Text="{Binding Option.Label}" Style="{StaticResource ChoiceCardStyle}"
                                         Command="{Binding SelectCommand}" CommandParameter="{Binding Option.Value}"
-                                        BackgroundColor="{Binding IsSelected, Converter={StaticResource SelectedToColorConverter}}" />
+                                    BackgroundColor="{Binding IsSelected, Converter={StaticResource SelectedToColorConverter}}"
+                                    TextColor="{Binding IsSelected, Converter={StaticResource SelectedToTextColorConverter}}" />
                             </DataTemplate>
                         </BindableLayout.ItemTemplate>
                     </VerticalStackLayout>
@@ -75,7 +88,13 @@
         <DataTemplate x:Key="TextFieldTemplate" x:DataType="vm:GenericFieldViewModel">
             <Border x:Name="FieldCard" Style="{StaticResource CardStyle}" Loaded="OnFieldCardLoaded">
                 <VerticalStackLayout Spacing="8">
-                    <Label Text="{Binding Label}" Style="{StaticResource FieldLabelStyle}" />
+                    <Grid ColumnDefinitions="*,Auto" ColumnSpacing="6">
+                        <Label Text="{Binding Label}" Style="{StaticResource FieldLabelStyle}" />
+                        <Button Grid.Column="1" Text="ⓘ" FontSize="20" Padding="6,0"
+                                BackgroundColor="Transparent" TextColor="{StaticResource Accent}"
+                                IsVisible="{Binding HasInfo}" SemanticProperties.Description="Vis feltinformasjon"
+                                Command="{Binding ShowInfoCommand}" />
+                    </Grid>
                     <Border Style="{StaticResource InputBorderStyle}"
                             Stroke="{Binding IsInvalid, Converter={StaticResource InvalidToStrokeColorConverter}}"
                             StrokeThickness="{Binding IsInvalid, Converter={StaticResource InvalidToThicknessConverter}}">
@@ -110,16 +129,19 @@
         <ScrollView x:Name="RootScroll" Grid.Row="0">
             <VerticalStackLayout Padding="16" Spacing="18">
 
-                <!-- Keep the main AI action explicit; less frequent actions live behind the native
-                     action sheet opened by Meny. -->
-                <Grid ColumnDefinitions="*,Auto,Auto" ColumnSpacing="8">
-                    <Button Grid.Column="1" Text="Fyll ut med KI" FontSize="14" Padding="12,8"
-                            BackgroundColor="Transparent"
-                            IsVisible="{Binding IsSubmitted, Converter={StaticResource EqualToBoolConverter}, ConverterParameter=False}"
-                            Clicked="OnAiFillClicked" />
-                        <Button x:Name="MenuButton" Grid.Column="2" Text="Meny" FontSize="14" Padding="12,8"
-                            BackgroundColor="Transparent"
-                        Clicked="OnMenuClicked" />
+                <!-- Keep history as a compact icon on the left and settings explicit on the right. -->
+                <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="8">
+                    <Button Grid.Column="0" Text="📈" FontSize="20" Padding="8"
+                        BackgroundColor="Transparent"
+                        IsVisible="{Binding CurrentRecipe.IsScored}"
+                        SemanticProperties.Description="Historikk"
+                        Clicked="OnHistoryClicked" />
+                    <Button Grid.Column="2" Text="⚙️  Innstillinger" FontSize="14" Padding="14,8"
+                            BackgroundColor="{AppThemeBinding Light=#F2F4F7, Dark=#29313D}"
+                            BorderColor="{AppThemeBinding Light=#D5DAE1, Dark=#46515F}"
+                            BorderWidth="1" CornerRadius="10"
+                            TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}"
+                        Clicked="OnSettingsClicked" />
                 </Grid>
 
                 <!-- Header -->
@@ -135,6 +157,14 @@
                     <Label Text="{Binding CurrentRecipe.Title}" Style="{StaticResource TitleStyle}" />
                     <Label Text="{Binding CurrentRecipe.Subtitle}" Style="{StaticResource SubtitleStyle}" />
                 </VerticalStackLayout>
+
+                <Button Text="✨ Tale til skjema" HeightRequest="46" CornerRadius="14" FontSize="15"
+                    FontAttributes="Bold" HorizontalOptions="Start"
+                    Padding="12,0"
+                    BackgroundColor="{AppThemeBinding Light=#E6EEFF, Dark=#1E2A3D}"
+                    TextColor="{StaticResource Accent}"
+                        IsVisible="{Binding IsSubmitted, Converter={StaticResource EqualToBoolConverter}, ConverterParameter=False}"
+                        Clicked="OnAiFillClicked" />
 
                 <!-- Date / time -->
                 <Border Style="{StaticResource CardStyle}">
@@ -153,9 +183,15 @@
                 <!-- Score summary - only meaningful for scored recipes (a document-style recipe
                      like a structured epikrise has no total/risk band to show here at all). -->
                 <Border x:Name="ScoreSummaryCard" Style="{StaticResource CardStyle}"
-                        BackgroundColor="{Binding Result.RiskBand.Color, Converter={StaticResource HexColorConverter}}"
+                        BackgroundColor="{AppThemeBinding Light={StaticResource CardBackgroundLight}, Dark={StaticResource CardBackgroundDark}}"
                         IsVisible="{Binding CurrentRecipe.IsScored}"
                         Opacity="0.92">
+                    <Border.Triggers>
+                        <DataTrigger TargetType="Border" Binding="{Binding CanSubmit}" Value="True">
+                            <Setter Property="BackgroundColor"
+                                    Value="{Binding Result.RiskBand.Color, Converter={StaticResource HexColorConverter}}" />
+                        </DataTrigger>
+                    </Border.Triggers>
                     <VerticalStackLayout Spacing="10">
                         <Label Text="{Binding Result.RiskBand.Label}" FontAttributes="Bold" FontSize="15"
                                IsVisible="{Binding CanSubmit}" TextColor="Black" />
@@ -178,11 +214,13 @@
                 <!-- Confirmation panel after submit -->
                 <Border x:Name="ConfirmationCard" Style="{StaticResource CardStyle}" IsVisible="{Binding IsSubmitted}">
                     <VerticalStackLayout Spacing="10">
-                        <HorizontalStackLayout Spacing="8">
-                            <Label Text="✓" TextColor="{StaticResource RiskLowColor}" FontAttributes="Bold" FontSize="18" />
-                            <Label Text="Lagret i journal" FontAttributes="Bold" FontSize="16"
+                        <VerticalStackLayout Spacing="4" HorizontalOptions="Center">
+                            <Label Text="✓" TextColor="{StaticResource RiskLowColor}" FontAttributes="Bold" FontSize="30"
+                                   HorizontalTextAlignment="Center" />
+                            <Label Text="Lagret i journal" FontAttributes="Bold" FontSize="21"
+                                   HorizontalTextAlignment="Center"
                                    TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}" />
-                        </HorizontalStackLayout>
+                        </VerticalStackLayout>
                         <Label Text="{Binding SubmittedTimestamp}" Style="{StaticResource HintStyle}" />
                         <HorizontalStackLayout Spacing="24">
                             <VerticalStackLayout>
@@ -194,7 +232,8 @@
                                 <Label Text="{Binding Result.TotalScore}" FontSize="20" FontAttributes="Bold" />
                             </VerticalStackLayout>
                         </HorizontalStackLayout>
-                        <Button Text="Ny registrering" Style="{StaticResource ChoiceCardStyle}" Command="{Binding NewRegistrationCommand}" />
+                        <Button Text="Ny registrering" Style="{StaticResource PrimaryButtonStyle}"
+                            FontSize="16" Command="{Binding NewRegistrationCommand}" />
                     </VerticalStackLayout>
                 </Border>
 

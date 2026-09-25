@@ -9,6 +9,7 @@
       "label": "Respirasjonsfrekvens",
       "unit": "pust/min",
       "hint": "Normalt: 12–20",
+      "info": "Tell respirasjoner i ett helt minutt mens pasienten er i ro. Vurder også om pustearbeidet er økt.",
       "kind": "Numeric",
       "min": 4,
       "max": 60,
@@ -26,6 +27,7 @@
       "label": "Oksygenmetning",
       "unit": "SpO₂ %",
       "hint": "Normalt: ≥96%",
+      "info": "Mål SpO₂ med pulsoksymeter på god signal­kvalitet. Noter verdien før eventuell oksygentilførsel når det er relevant.",
       "kind": "Numeric",
       "min": 50,
       "max": 100,
@@ -40,6 +42,7 @@
     {
       "id": "o2",
       "label": "Oksygentilskudd",
+      "info": "Velg oksygen når pasienten får tilført oksygen utover romluft. Oppgi eventuell mengde og administrasjonsform i dokumentasjonen.",
       "kind": "SingleChoice",
       "options": [
         { "value": "air", "label": "Romluft", "icon": "🌬️", "score": 0 },
@@ -51,6 +54,7 @@
       "label": "Systolisk blodtrykk",
       "unit": "mmHg",
       "hint": "Normalt: 111–219",
+      "info": "Bruk det systoliske trykket fra en korrekt utført blodtrykksmåling. Kontroller målingen ved uventet eller avvikende verdi.",
       "kind": "Numeric",
       "min": 40,
       "max": 300,
@@ -68,6 +72,7 @@
       "label": "Puls",
       "unit": "slag/min",
       "hint": "Normalt: 51–90",
+      "info": "Registrer pulsfrekvens i slag per minutt. Vurder om rytmen er regelmessig og om målingen er påvirket av aktivitet eller feber.",
       "kind": "Numeric",
       "min": 20,
       "max": 250,
@@ -84,6 +89,7 @@
     {
       "id": "acvpu",
       "label": "Bevissthetsnivå (ACVPU)",
+      "info": "Vurder pasientens høyeste responsnivå: Alert, ny forvirring, respons på Voice, respons på Pain eller Unresponsive. Sammenlign med pasientens normale nivå.",
       "kind": "SingleChoice",
       "options": [
         { "value": "alert", "label": "Alert", "score": 0 },
@@ -98,6 +104,7 @@
       "label": "Kroppstemperatur",
       "unit": "°C",
       "hint": "Normalt: 36,1–38,0",
+      "info": "Registrer kroppstemperaturen og ta hensyn til målemetode. Bruk samme metode ved sammenligning over tid.",
       "kind": "Numeric",
       "min": 25,
       "max": 43,

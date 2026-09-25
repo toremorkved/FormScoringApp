@@ -7,6 +7,7 @@
     {
       "id": "loc",
       "label": "1a. Bevissthetsnivå",
+      "info": "Vurder pasientens våkenhet og behov for stimulering. Skår den beste responsen som observeres under undersøkelsen.",
       "kind": "SingleChoice",
       "options": [
         { "value": "alert", "label": "Våken, adekvat reagerende", "score": 0 },
@@ -19,6 +20,7 @@
       "id": "locQuestions",
       "label": "1b. Bevissthetsnivå - spørsmål",
       "hint": "Spør om måned og egen alder",
+      "info": "Spør pasienten om aktuell måned og egen alder. Ikke gi hjelp eller ledende spørsmål.",
       "kind": "SingleChoice",
       "options": [
         { "value": "both", "label": "Svarer riktig på begge spørsmål", "score": 0 },
@@ -30,6 +32,7 @@
       "id": "locCommands",
       "label": "1c. Bevissthetsnivå - kommandoer",
       "hint": "Be pasienten åpne/lukke øynene og knytte/åpne hånden",
+      "info": "Gi de to standardkommandoene og vurder om pasienten utfører ingen, én eller begge korrekt.",
       "kind": "SingleChoice",
       "options": [
         { "value": "both", "label": "Utfører begge kommandoer riktig", "score": 0 },
@@ -40,6 +43,7 @@
     {
       "id": "gaze",
       "label": "2. Blikkdeviasjon",
+      "info": "Vurder øyestilling og blikkbevegelser. Skill mellom normal funksjon, delvis parese og tvungen deviasjon.",
       "kind": "SingleChoice",
       "options": [
         { "value": "normal", "label": "Normale øyebevegelser", "score": 0 },
@@ -50,6 +54,7 @@
     {
       "id": "visualFields",
       "label": "3. Synsfelt",
+      "info": "Test synsfeltene ved konfrontasjon og vurder hvert øye. Registrer hemianopsi eller kortikal blindhet når det foreligger.",
       "kind": "SingleChoice",
       "options": [
         { "value": "none", "label": "Ingen synsfeltutfall", "score": 0 },
@@ -61,6 +66,7 @@
     {
       "id": "facialPalsy",
       "label": "4. Facialisparese",
+      "info": "Be pasienten vise tennene, smile, løfte øyenbrynene og lukke øynene. Vurder asymmetri i øvre og nedre ansikt.",
       "kind": "SingleChoice",
       "options": [
         { "value": "normal", "label": "Normal, symmetrisk bevegelse", "score": 0 },
@@ -73,6 +79,7 @@
       "id": "motorArmLeft",
       "label": "5a. Motorikk arm, venstre",
       "hint": "Hold armen strukket 90°/45° i 10 sekunder",
+      "info": "Test venstre arm i 90 grader sittende eller 45 grader liggende i 10 sekunder. Vurder drift, fall og eventuell bevegelse mot tyngdekraft.",
       "kind": "SingleChoice",
       "options": [
         { "value": "noDrift", "label": "Ingen drift, holder posisjon i 10 sekunder", "score": 0 },
@@ -86,6 +93,7 @@
       "id": "motorArmRight",
       "label": "5b. Motorikk arm, høyre",
       "hint": "Hold armen strukket 90°/45° i 10 sekunder",
+      "info": "Test høyre arm i 90 grader sittende eller 45 grader liggende i 10 sekunder. Vurder drift, fall og eventuell bevegelse mot tyngdekraft.",
       "kind": "SingleChoice",
       "options": [
         { "value": "noDrift", "label": "Ingen drift, holder posisjon i 10 sekunder", "score": 0 },
@@ -99,6 +107,7 @@
       "id": "motorLegLeft",
       "label": "6a. Motorikk ben, venstre",
       "hint": "Hold benet strukket 30° i 5 sekunder",
+      "info": "Test venstre ben i 30 grader i 5 sekunder. Vurder drift, fall og eventuell bevegelse mot tyngdekraft.",
       "kind": "SingleChoice",
       "options": [
         { "value": "noDrift", "label": "Ingen drift, holder posisjon i 5 sekunder", "score": 0 },
@@ -112,6 +121,7 @@
       "id": "motorLegRight",
       "label": "6b. Motorikk ben, høyre",
       "hint": "Hold benet strukket 30° i 5 sekunder",
+      "info": "Test høyre ben i 30 grader i 5 sekunder. Vurder drift, fall og eventuell bevegelse mot tyngdekraft.",
       "kind": "SingleChoice",
       "options": [
         { "value": "noDrift", "label": "Ingen drift, holder posisjon i 5 sekunder", "score": 0 },
@@ -125,6 +135,7 @@
       "id": "limbAtaxia",
       "label": "7. Ataksi",
       "hint": "Finger-nese og hæl-kne-forsøk",
+      "info": "Test finger-nese og hæl-kne på begge sider. Skår bare koordinasjonssvikt som ikke forklares av kraftsvikt.",
       "kind": "SingleChoice",
       "options": [
         { "value": "absent", "label": "Fraværende", "score": 0 },
@@ -135,6 +146,7 @@
     {
       "id": "sensory",
       "label": "8. Sensibilitet",
+      "info": "Test lett berøring eller pinprikk symmetrisk. Vurder sensibilitetstap og pasientens respons på stimuleringen.",
       "kind": "SingleChoice",
       "options": [
         { "value": "normal", "label": "Normal, ingen sensibilitetstap", "score": 0 },
@@ -146,6 +158,7 @@
       "id": "language",
       "label": "9. Beste språkfunksjon",
       "hint": "Be pasienten beskrive et bilde, benevne gjenstander og lese setninger",
+      "info": "Vurder språkforståelse og uttrykksevne med bildebeskrivelse, benevning og lesing. Skår afasi, ikke dysartri.",
       "kind": "SingleChoice",
       "options": [
         { "value": "none", "label": "Ingen afasi", "score": 0 },
@@ -157,6 +170,7 @@
     {
       "id": "dysarthria",
       "label": "10. Dysartri",
+      "info": "Vurder artikulasjonen ved å be pasienten gjenta ord eller setninger. Skill utydelig tale fra språkforstyrrelse.",
       "kind": "SingleChoice",
       "options": [
         { "value": "normal", "label": "Normal artikulasjon", "score": 0 },
@@ -167,6 +181,7 @@
     {
       "id": "extinction",
       "label": "11. Ekstinksjon/neglekt",
+      "info": "Test dobbel samtidig stimulering i relevante sansemodaliteter. Vurder om pasienten overser stimuli på én side.",
       "kind": "SingleChoice",
       "options": [
         { "value": "none", "label": "Ingen abnormalitet", "score": 0 },

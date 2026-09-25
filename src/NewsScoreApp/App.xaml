@@ -19,6 +19,7 @@
             <conv:IntGreaterThanZeroConverter x:Key="IntGreaterThanZeroConverter" />
             <conv:ActiveChipToColorConverter x:Key="ActiveChipToColorConverter" />
             <conv:SelectedToColorConverter x:Key="SelectedToColorConverter" />
+            <conv:SelectedToTextColorConverter x:Key="SelectedToTextColorConverter" />
             <conv:HexColorConverter x:Key="HexColorConverter" />
             <conv:InvalidToStrokeColorConverter x:Key="InvalidToStrokeColorConverter" />
             <conv:InvalidToThicknessConverter x:Key="InvalidToThicknessConverter" />

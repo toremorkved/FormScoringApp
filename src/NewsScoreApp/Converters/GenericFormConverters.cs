@@ -42,6 +42,15 @@ public sealed class SelectedToColorConverter : IValueConverter
         throw new NotSupportedException();
 }
 
+public sealed class SelectedToTextColorConverter : IValueConverter
+{
+    public object Convert(object? value, Type targetType, object? parameter, CultureInfo culture) =>
+        value is true ? Colors.White : ThemeResources.Get("TextPrimary");
+
+    public object ConvertBack(object? value, Type targetType, object? parameter, CultureInfo culture) =>
+        throw new NotSupportedException();
+}
+
 /// <summary>Parses a "#RRGGBB" hex string (as stored in a recipe's RiskBand.Color) into a MAUI Color.
 /// Falls back to a neutral gray when the value is null (form not yet complete).</summary>
 public sealed class HexColorConverter : IValueConverter

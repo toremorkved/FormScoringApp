@@ -8,6 +8,7 @@
       "id": "sensory",
       "label": "Sensorisk oppfatning",
       "hint": "Evne til å reagere hensiktsmessig på trykk-relatert ubehag",
+      "info": "Vurder evnen til å oppfatte og reagere på trykk, ubehag og smerte. Ta hensyn til redusert bevissthet, sedasjon og nevrologiske utfall.",
       "kind": "SingleChoice",
       "options": [
         { "value": "none", "label": "Helt manglende", "score": 1 },
@@ -20,6 +21,7 @@
       "id": "moisture",
       "label": "Fuktighet",
       "hint": "Grad av hudfuktighet",
+      "info": "Vurder hvor ofte huden utsettes for fuktighet fra svette, urin, avføring eller sårvæske, og hvor lenge huden forblir fuktig.",
       "kind": "SingleChoice",
       "options": [
         { "value": "constantly_moist", "label": "Konstant fuktig", "score": 1 },
@@ -32,6 +34,7 @@
       "id": "activity",
       "label": "Aktivitet",
       "hint": "Grad av fysisk aktivitet",
+      "info": "Vurder hvor mye pasienten faktisk går i løpet av dagen: sengeliggende, stolavhengig, sporadisk gange eller hyppig gange.",
       "kind": "SingleChoice",
       "options": [
         { "value": "bedfast", "label": "Sengeliggende", "score": 1 },
@@ -44,6 +47,7 @@
       "id": "mobility",
       "label": "Mobilitet",
       "hint": "Evne til å endre og kontrollere kroppsstilling",
+      "info": "Vurder pasientens evne til selv å endre kroppsstilling og avlaste utsatte hudområder.",
       "kind": "SingleChoice",
       "options": [
         { "value": "completely_immobile", "label": "Helt immobil", "score": 1 },
@@ -56,6 +60,7 @@
       "id": "nutrition",
       "label": "Ernæring",
       "hint": "Vanlig ernæringsinntak",
+      "info": "Vurder vanlig matinntak og ernæringskvalitet, inkludert protein og væske, den siste uken.",
       "kind": "SingleChoice",
       "options": [
         { "value": "very_poor", "label": "Svært dårlig", "score": 1 },
@@ -67,6 +72,7 @@
     {
       "id": "friction",
       "label": "Friksjon og skjærkrefter",
+      "info": "Vurder om pasienten sklir eller trenger hjelp til forflytning, slik at huden utsettes for friksjon eller skjærkrefter.",
       "kind": "SingleChoice",
       "options": [
         { "value": "problem", "label": "Er et problem", "score": 1 },

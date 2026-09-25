@@ -8,6 +8,7 @@
       "id": "previousFalls",
       "label": "Tidligere fall",
       "hint": "Har pasienten falt tidligere (uansett årsak)?",
+      "info": "Registrer om pasienten har hatt ett eller flere fall tidligere, uavhengig av årsak og tidspunkt.",
       "kind": "SingleChoice",
       "options": [
         { "value": "no", "label": "Nei", "score": 0 },
@@ -18,6 +19,7 @@
       "id": "medications",
       "label": "Medikamenter",
       "hint": "Bruker sedativa, diuretika, antihypertensiva, antiparkinson- eller antidepressiva?",
+      "info": "Se etter bruk av én eller flere av legemiddelgruppene som inngår i Downton-indeksen. Vurder aktuell legemiddelliste.",
       "kind": "SingleChoice",
       "options": [
         { "value": "none", "label": "Ingen av disse", "score": 0 },
@@ -28,6 +30,7 @@
       "id": "sensoryDeficit",
       "label": "Sensorisk svekkelse",
       "hint": "Synssvekkelse, hørselssvekkelse eller lammelser/parese?",
+      "info": "Registrer relevant syns- eller hørselssvekkelse, samt lammelse eller parese som kan påvirke balanse og orientering.",
       "kind": "SingleChoice",
       "options": [
         { "value": "none", "label": "Ingen svekkelse", "score": 0 },
@@ -37,6 +40,7 @@
     {
       "id": "mentalState",
       "label": "Mental tilstand",
+      "info": "Vurder om pasienten er orientert for person, sted og situasjon, eller er forvirret/desorientert.",
       "kind": "SingleChoice",
       "options": [
         { "value": "orientated", "label": "Orientert", "score": 0 },
@@ -46,6 +50,7 @@
     {
       "id": "gait",
       "label": "Gange/mobilitet",
+      "info": "Vurder pasientens faktiske gange og behov for støtte. Skill mellom sikker gange med hjelpemiddel og ustø eller usikker gange.",
       "kind": "SingleChoice",
       "options": [
         { "value": "normal", "label": "Normal (inkl. sengeliggende/immobil)", "score": 0 },

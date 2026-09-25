@@ -9,6 +9,7 @@
       "label": "Respirasjonsfrekvens",
       "unit": "pust/min",
       "hint": "Forhøyet ved ≥22",
+      "info": "Tell respirasjoner i ett helt minutt mens pasienten er i ro. qSOFA gir poeng ved respirasjonsfrekvens på 22 eller mer per minutt.",
       "kind": "Numeric",
       "min": 4,
       "max": 60,
@@ -23,6 +24,7 @@
       "label": "Systolisk blodtrykk",
       "unit": "mmHg",
       "hint": "Lavt ved ≤100",
+      "info": "Bruk systolisk blodtrykk fra en korrekt utført måling. qSOFA gir poeng ved systolisk trykk på 100 mmHg eller lavere.",
       "kind": "Numeric",
       "min": 40,
       "max": 300,
@@ -35,6 +37,7 @@
     {
       "id": "mentation",
       "label": "Mental status",
+      "info": "Vurder om pasienten har endret mental status sammenlignet med normalt. I qSOFA regnes GCS under 15 som endret bevissthet.",
       "kind": "SingleChoice",
       "options": [
         { "value": "normal", "label": "Normal", "score": 0 },

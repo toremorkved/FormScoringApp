@@ -47,6 +47,12 @@ public static class MauiProgram
 		builder.Services.AddTransient<Views.HistoryPage>();
 
 #if IOS
+		Microsoft.Maui.Handlers.EntryHandler.Mapper.AppendToMapping("RemoveNativeBorder", (handler, _) =>
+		{
+			handler.PlatformView.BorderStyle = UIKit.UITextBorderStyle.None;
+			handler.PlatformView.Layer.BorderWidth = 0;
+			handler.PlatformView.Layer.BorderColor = null;
+		});
 		Platforms.iOS.Handlers.KeyboardToolbarHandler.Register();
 		Platforms.iOS.Handlers.ScrollTouchHandler.Register();
 #endif
