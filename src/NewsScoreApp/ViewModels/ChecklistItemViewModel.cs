@@ -29,6 +29,8 @@ public sealed partial class ChecklistItemViewModel : ObservableObject
 
     public string Label => Field.Label;
 
+    public bool HasLongDisplayValue => DisplayValue.Length > 180;
+
     /// <summary>For single-choice fields: a compact list of the available option labels
     /// (e.g. "Luft / Oksygen") shown under the field label so the clinician knows exactly what
     /// to ask the patient about, even before/without an AI suggestion. For numeric fields: the
@@ -74,6 +76,8 @@ public sealed partial class ChecklistItemViewModel : ObservableObject
         IsFilled = true;
         OnPropertyChanged(nameof(StatusIcon));
     }
+
+    partial void OnDisplayValueChanged(string value) => OnPropertyChanged(nameof(HasLongDisplayValue));
 
     public void Clear()
     {

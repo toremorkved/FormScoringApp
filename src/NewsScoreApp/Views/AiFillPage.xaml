@@ -89,24 +89,33 @@
                     <DataTemplate x:DataType="vm:ChecklistItemViewModel">
                         <Border Style="{StaticResource CardStyle}" Padding="14,12">
                             <VerticalStackLayout Spacing="6">
-                                <Grid ColumnDefinitions="Auto,*,Auto,Auto" ColumnSpacing="8">
+                                    <Grid ColumnDefinitions="Auto,*,Auto" ColumnSpacing="8">
                                     <Label Text="{Binding StatusIcon}" FontSize="16" VerticalOptions="Center" />
                                     <Label Grid.Column="1" Text="{Binding Label}"
                                            FontAttributes="Bold" FontSize="15" VerticalOptions="Center"
                                            TextColor="{AppThemeBinding Light={StaticResource TextPrimaryLight}, Dark={StaticResource TextPrimaryDark}}" />
-                                    <Label Grid.Column="2" Text="{Binding DisplayValue}" FontSize="15" FontAttributes="Bold"
-                                           VerticalOptions="Center" TextColor="{StaticResource Accent}"
-                                           IsVisible="{Binding IsFilled}" />
-                                    <Label Grid.Column="2" Text="Ikke nevnt ennå" FontSize="13"
+                                     <Label Grid.Column="2" Text="Ikke nevnt ennå" FontSize="13"
                                            VerticalOptions="Center" Style="{StaticResource HintStyle}"
                                            IsVisible="{Binding IsFilled, Converter={StaticResource EqualToBoolConverter}, ConverterParameter=False}" />
-                                    <Button Grid.Column="3" Text="✕" FontSize="13" Padding="8,4"
+                                     <Button Grid.Column="2" Text="✕" FontSize="13" Padding="8,4"
                                             BackgroundColor="Transparent"
                                             TextColor="{AppThemeBinding Light={StaticResource TextSecondaryLight}, Dark={StaticResource TextSecondaryDark}}"
                                             IsVisible="{Binding IsFilled}"
                                             Command="{Binding Source={x:Reference RootPage}, Path=BindingContext.RejectFieldCommand}"
                                             CommandParameter="{Binding .}" />
                                 </Grid>
+
+                                    <Label Text="{Binding DisplayValue}" FontSize="15" FontAttributes="Bold"
+                                        TextColor="{StaticResource Accent}" LineBreakMode="TailTruncation"
+                                            MaxLines="4" IsVisible="{Binding IsFilled}">
+                                     <Label.GestureRecognizers>
+                                         <TapGestureRecognizer Tapped="OnDisplayValueTapped" />
+                                     </Label.GestureRecognizers>
+                                    </Label>
+                                    <Button Text="Vis hele" FontSize="12" Padding="0" BackgroundColor="Transparent"
+                                         TextColor="{StaticResource Accent}" HorizontalOptions="Start"
+                                         IsVisible="{Binding HasLongDisplayValue}"
+                                         Clicked="OnDisplayValueTapped" />
 
                                 <!-- Choice-field hint: lists the available options as a compact
                                      comma-separated line so the clinician knows what to ask the

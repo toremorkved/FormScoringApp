@@ -1,5 +1,9 @@
 using Microsoft.Extensions.DependencyInjection;
 using NewsScoreApp.ViewModels;
+#if IOS
+using Foundation;
+using UIKit;
+#endif
 
 namespace NewsScoreApp.Views;
 
@@ -24,7 +28,36 @@ public partial class GenericFormPage : ContentPage
         InitializeComponent();
         _viewModel = viewModel;
         BindingContext = viewModel;
+#if IOS
+        MenuButton.Loaded += OnMenuButtonLoaded;
+#endif
     }
+
+#if IOS
+    private void OnMenuButtonLoaded(object? sender, EventArgs e)
+    {
+        ConfigureNativeMenu();
+    }
+
+    private void ConfigureNativeMenu()
+    {
+        if (MenuButton.Handler?.PlatformView is not UIButton button) return;
+
+        var actions = new List<UIAction>();
+        if (_viewModel.CurrentRecipe?.IsScored == true)
+        {
+            actions.Add(UIAction.Create("Historikk", null, "news.history", OnNativeHistorySelected));
+        }
+
+        actions.Add(UIAction.Create("Innstillinger", null, "news.settings", OnNativeSettingsSelected));
+        button.Menu = UIMenu.Create("Meny", null, new NSString("news.menu"), UIMenuOptions.DisplayInline, actions.ToArray());
+        button.ShowsMenuAsPrimaryAction = true;
+    }
+
+    private void OnNativeHistorySelected(UIAction action) => _ = OpenHistoryAsync();
+
+    private void OnNativeSettingsSelected(UIAction action) => _ = OpenSettingsAsync();
+#endif
 
     protected override async void OnAppearing()
     {
@@ -39,9 +72,16 @@ public partial class GenericFormPage : ContentPage
         _viewModel.InfoRequested -= OnInfoRequested;
         _viewModel.InfoRequested += OnInfoRequested;
 
+    #if IOS
+        ConfigureNativeMenu();
+    #endif
+
         if (_initialized) return;
         _initialized = true;
         await _viewModel.InitializeAsync();
+    #if IOS
+        ConfigureNativeMenu();
+    #endif
     }
 
     protected override void OnDisappearing()
@@ -134,12 +174,49 @@ public partial class GenericFormPage : ContentPage
         await Navigation.PushModalAsync(new NavigationPage(aiPage));
     }
 
-    private async void OnHistoryClicked(object? sender, EventArgs e)
+    private async void OnMenuClicked(object? sender, EventArgs e)
+    {
+        var options = new List<string>();
+        if (_viewModel.CurrentRecipe?.IsScored == true)
+            options.Add("Historikk");
+        options.Add("Innstillinger");
+
+        var choice = await DisplayActionSheetAsync("Meny", "Avbryt", null, options.ToArray());
+        switch (choice)
+        {
+            case "Historikk":
+                await OpenHistoryAsync();
+                break;
+            case "Innstillinger":
+                await OpenSettingsAsync();
+                break;
+        }
+    }
+
+    private async Task OpenSettingsAsync()
+    {
+        var settingsPage = MauiProgram.Services.GetRequiredService<SettingsPage>();
+        var nav = new NavigationPage(settingsPage);
+#if IOS
+        Platforms.iOS.Handlers.SheetPresentationHelper.PrepareHalfSheet(nav);
+#endif
+        await Navigation.PushModalAsync(nav);
+#if IOS
+        Platforms.iOS.Handlers.SheetPresentationHelper.ApplyHalfSheetDetents();
+#endif
+    }
+
+    private async Task OpenHistoryAsync()
     {
         if (_viewModel.CurrentRecipe is null) return;
         var historyPage = MauiProgram.Services.GetRequiredService<HistoryPage>();
         await historyPage.PrepareAsync(_viewModel.CurrentRecipe);
         await Navigation.PushModalAsync(new NavigationPage(historyPage));
+    }
+
+    private async void OnHistoryClicked(object? sender, EventArgs e)
+    {
+        await OpenHistoryAsync();
     }
 
     private void OnInfoRequested(string title, string message)

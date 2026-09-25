@@ -1,5 +1,6 @@
 using Microsoft.Extensions.DependencyInjection;
 using NewsScoreApp.Services;
+using NewsScoreApp.Services.AI;
 
 namespace NewsScoreApp;
 
@@ -16,24 +17,13 @@ public partial class App : Application
 		// this is a single fast local Keychain read at startup, not a network call.
 		azureSettings.LoadAsync().GetAwaiter().GetResult();
 
-#if DEBUG
-		// DEV-ONLY bootstrap: seeds Azure OpenAI dev/test resource credentials into secure
-		// storage the first time the app runs on a given simulator/device, so the cloud AI tier
-		// works out of the box while testing without needing a settings-screen UI yet. Never
-		// overwrites a value the user/tester has already configured.
-		//
-		// Credentials are read from environment variables the developer sets locally
-		// (AZURE_OPENAI_ENDPOINT / AZURE_OPENAI_DEPLOYMENT / AZURE_OPENAI_API_KEY) - NEVER
-		// hardcode a real endpoint/key/deployment literal here again. A previous version of this
-		// file committed a real API key directly into source control; that key has since been
-		// rotated/revoked in Azure and must stay that way. If neither env vars nor a
-		// previously-saved SecureStorage value are present, the cloud tier simply stays
-		// unconfigured and HybridAiExtractionEngine falls back to the on-device/regex engines.
+		// For the controlled POC release, credentials are injected at build time from local
+		// environment variables and persisted only in device SecureStorage. Never commit them.
 		if (!azureSettings.IsConfigured)
 		{
-			var endpoint = Environment.GetEnvironmentVariable("AZURE_OPENAI_ENDPOINT");
-			var deployment = Environment.GetEnvironmentVariable("AZURE_OPENAI_DEPLOYMENT");
-			var apiKey = Environment.GetEnvironmentVariable("AZURE_OPENAI_API_KEY");
+			var endpoint = AzureOpenAiBuildSettings.Endpoint;
+			var deployment = AzureOpenAiBuildSettings.Deployment;
+			var apiKey = AzureOpenAiBuildSettings.ApiKey;
 
 			if (!string.IsNullOrWhiteSpace(endpoint) && !string.IsNullOrWhiteSpace(apiKey))
 			{
@@ -42,7 +32,6 @@ public partial class App : Application
 				azureSettings.ApiKey = apiKey;
 			}
 		}
-#endif
 	}
 
 	protected override Window CreateWindow(IActivationState? activationState)

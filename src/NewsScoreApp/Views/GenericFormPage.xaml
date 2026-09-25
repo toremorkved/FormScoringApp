@@ -110,24 +110,16 @@
         <ScrollView x:Name="RootScroll" Grid.Row="0">
             <VerticalStackLayout Padding="16" Spacing="18">
 
-                <!-- Settings entry point (gear icon) - form picker, auto-advance and theme toggle
-                     now live on a dedicated SettingsPage, mirroring iOS's own Settings app instead
-                     of cluttering the top of the form with three separate controls. AI auto-fill
-                     (✨) sits right next to it, hidden once the form has been submitted, and the
-                     trend chart (📈) is always available (for scored recipes only - a document-
-                     style recipe like a structured epikrise has no score/risk band to trend). -->
-                <Grid ColumnDefinitions="*,Auto,Auto,Auto" ColumnSpacing="4">
-                    <Button Grid.Column="1" Text="✨" FontSize="20" Padding="8"
+                <!-- Keep the main AI action explicit; less frequent actions live behind the native
+                     action sheet opened by Meny. -->
+                <Grid ColumnDefinitions="*,Auto,Auto" ColumnSpacing="8">
+                    <Button Grid.Column="1" Text="Fyll ut med KI" FontSize="14" Padding="12,8"
                             BackgroundColor="Transparent"
                             IsVisible="{Binding IsSubmitted, Converter={StaticResource EqualToBoolConverter}, ConverterParameter=False}"
                             Clicked="OnAiFillClicked" />
-                    <Button Grid.Column="2" Text="📈" FontSize="20" Padding="8"
+                        <Button x:Name="MenuButton" Grid.Column="2" Text="Meny" FontSize="14" Padding="12,8"
                             BackgroundColor="Transparent"
-                            IsVisible="{Binding CurrentRecipe.IsScored}"
-                            Clicked="OnHistoryClicked" />
-                    <Button Grid.Column="3" Text="⚙️" FontSize="22" Padding="8"
-                            BackgroundColor="Transparent"
-                            Clicked="OnSettingsClicked" />
+                        Clicked="OnMenuClicked" />
                 </Grid>
 
                 <!-- Header -->

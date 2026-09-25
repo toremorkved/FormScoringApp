@@ -55,6 +55,18 @@ public partial class AiFillPage : ContentPage
             _viewModel.SelectedEngineModeIndex = index;
     }
 
+    private async void OnDisplayValueTapped(object? sender, EventArgs e)
+    {
+        var item = sender switch
+        {
+            BindableObject bindable when bindable.BindingContext is ChecklistItemViewModel checklist => checklist,
+            _ => null,
+        };
+
+        if (item is null || string.IsNullOrWhiteSpace(item.DisplayValue)) return;
+        await DisplayAlertAsync(item.Label, item.DisplayValue, "Lukk");
+    }
+
     private void OnFieldCommitted(string fieldId, string value)
     {
         _formViewModel.ApplyAiSuggestion(fieldId, value);

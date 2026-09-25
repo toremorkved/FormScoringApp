@@ -16,11 +16,11 @@
 		<ApplicationTitle>NEWS Score</ApplicationTitle>
 
 		<!-- App Identifier -->
-		<ApplicationId>com.dips.newsscoreapp</ApplicationId>
+		<ApplicationId>com.dipsas.newsscoreapp</ApplicationId>
 
 		<!-- Versions -->
 		<ApplicationDisplayVersion>1.0</ApplicationDisplayVersion>
-		<ApplicationVersion>1</ApplicationVersion>
+		<ApplicationVersion>2</ApplicationVersion>
 
 		<!-- iOS 26-era deployment target -->
 		<SupportedOSPlatformVersion Condition="$([MSBuild]::GetTargetPlatformIdentifier('$(TargetFramework)')) == 'ios'">17.0</SupportedOSPlatformVersion>
@@ -43,6 +43,32 @@
 		<!-- Raw Assets (also remove the "Resources\Raw" prefix) -->
 		<MauiAsset Include="Resources\Raw\**" LogicalName="%(RecursiveDir)%(Filename)%(Extension)" />
 	</ItemGroup>
+
+	<PropertyGroup>
+		<AzureOpenAiEndpoint Condition="'$(AzureOpenAiEndpoint)' == ''">$([System.Environment]::GetEnvironmentVariable('AZURE_OPENAI_ENDPOINT'))</AzureOpenAiEndpoint>
+		<AzureOpenAiDeployment Condition="'$(AzureOpenAiDeployment)' == ''">$([System.Environment]::GetEnvironmentVariable('AZURE_OPENAI_DEPLOYMENT'))</AzureOpenAiDeployment>
+		<AzureOpenAiApiKey Condition="'$(AzureOpenAiApiKey)' == ''">$([System.Environment]::GetEnvironmentVariable('AZURE_OPENAI_API_KEY'))</AzureOpenAiApiKey>
+	</PropertyGroup>
+
+	<Target Name="GenerateAzureOpenAiBuildSettings" BeforeTargets="CoreCompile">
+		<MakeDir Directories="$(IntermediateOutputPath)Generated" />
+		<ItemGroup>
+			<AzureOpenAiGeneratedLine Include="namespace NewsScoreApp.Services.AI%3B" />
+			<AzureOpenAiGeneratedLine Include="internal static class AzureOpenAiBuildSettings" />
+			<AzureOpenAiGeneratedLine Include="{" />
+			<AzureOpenAiGeneratedLine Include="    public const string Endpoint = &quot;$(AzureOpenAiEndpoint)&quot;%3B" />
+			<AzureOpenAiGeneratedLine Include="    public const string Deployment = &quot;$(AzureOpenAiDeployment)&quot;%3B" />
+			<AzureOpenAiGeneratedLine Include="    public const string ApiKey = &quot;$(AzureOpenAiApiKey)&quot;%3B" />
+			<AzureOpenAiGeneratedLine Include="}" />
+		</ItemGroup>
+		<WriteLinesToFile
+			File="$(IntermediateOutputPath)Generated/AzureOpenAiBuildSettings.g.cs"
+			Overwrite="true"
+			Lines="@(AzureOpenAiGeneratedLine)" />
+		<ItemGroup>
+			<Compile Include="$(IntermediateOutputPath)Generated/AzureOpenAiBuildSettings.g.cs" />
+		</ItemGroup>
+	</Target>
 
 	<ItemGroup>
 		<PackageReference Include="CrossIntelligence" Version="0.6.59" />
